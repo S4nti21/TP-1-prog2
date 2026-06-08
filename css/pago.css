@@ -1,22 +1,77 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
+:root{
+
+    --bg-color: #0b0b0b;
+
+    --secondary-bg: #111111;
+
+    --text-color: #ffffff;
+
+    --text-secondary: #9b9b9b;
+
+    --border-color: #1f1f1f;
+
+    --button-bg: #ffffff;
+
+    --button-text: #000000;
+
+    --success-color: #34c759;
+
+    --error-color: #ff3b30;
+
+}
+
+/* LIGHT MODE */
+[data-modo="claro"]{
+
+    --bg-color: #f5f5f5;
+
+    --secondary-bg: #ffffff;
+
+    --text-color: #111111;
+
+    --text-secondary: #5b5b5b;
+
+    --border-color: #dddddd;
+
+    --button-bg: #111111;
+
+    --button-text: #ffffff;
+
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* BODY */
 body{
-    background-color: #0b0b0b;
-    color: white;
+
+    background-color: var(--bg-color);
+
+    color: var(--text-color);
 
     font-family: 'Montserrat', sans-serif;
+
+    transition: 0.3s;
+
 }
 
+/* LINKS */
 a{
+
     text-decoration: none;
-    color: white;
+
+    color: var(--text-color);
+
 }
 
 /* =========================================================
@@ -24,6 +79,7 @@ a{
 ========================================================= */
 
 .header{
+
     width: 100%;
     height: 90px;
 
@@ -33,7 +89,7 @@ a{
     justify-content: space-between;
     align-items: center;
 
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid var(--border-color);
 
     position: sticky;
     top: 0;
@@ -43,42 +99,77 @@ a{
     backdrop-filter: blur(10px);
 
     z-index: 1000;
+
 }
 
+/* LOGO */
 .header-logo a{
+
     font-size: 1.1rem;
+
     font-weight: 700;
 
     letter-spacing: 4px;
+
 }
 
+/* MENU */
 .header-menu{
+
     display: flex;
+
     gap: 45px;
+
 }
 
 .header-menu a{
+
     font-size: 0.85rem;
+
     letter-spacing: 2px;
 
     transition: 0.3s;
+
 }
 
 .header-menu a:hover{
-    color: #999;
+
+    color: var(--text-secondary);
+
 }
 
+/* ICONOS */
 .header-icons{
+
     display: flex;
-    gap: 25px;
+
+    align-items: center;
+
+    gap: 18px;
+
 }
 
-.header-icons a{
+/* BUTTON */
+.icon-btn{
+
+    background: none;
+
+    border: none;
+
+    color: var(--text-color);
+
+    font-size: 1rem;
+
+    cursor: pointer;
+
     transition: 0.3s;
+
 }
 
-.header-icons a:hover{
-    color: #999;
+.icon-btn:hover{
+
+    color: var(--text-secondary);
+
 }
 
 /* =========================================================
@@ -86,104 +177,138 @@ a{
 ========================================================= */
 
 .payment-container{
+
     width: 100%;
 
     display: flex;
+
     gap: 60px;
 
     padding: 60px;
 
-    align-items: flex-start;
 }
 
 /* =========================================================
-   FORM
+   LEFT
 ========================================================= */
 
 .payment-form-section{
+
     flex: 2;
+
 }
 
+/* TITLE */
 .payment-title{
+
     margin-bottom: 45px;
+
 }
 
 .payment-title h1{
+
     font-size: 3rem;
+
     letter-spacing: 5px;
 
     margin-bottom: 12px;
+
 }
 
 .payment-title p{
-    color: #8d8d8d;
+
+    color: var(--text-secondary);
+
 }
 
 /* FORM */
 .payment-form{
+
     width: 100%;
+
 }
 
 /* GROUP */
 .form-group{
+
     display: flex;
+
     flex-direction: column;
 
     margin-bottom: 25px;
+
 }
 
 /* LABEL */
 .form-group label{
+
     margin-bottom: 12px;
 
-    font-size: 0.9rem;
-    color: #cfcfcf;
+    color: var(--text-secondary);
+
 }
 
-/* INPUTS */
+/* INPUT */
 .form-group input,
 .form-group select{
+
     width: 100%;
+
     height: 58px;
 
-    background-color: #111;
-    color: white;
+    background-color: var(--secondary-bg);
 
-    border: 1px solid #1f1f1f;
+    color: var(--text-color);
+
+    border: 1px solid var(--border-color);
 
     padding: 0 18px;
-
-    font-size: 0.95rem;
 
     outline: none;
 
     transition: 0.3s;
+
 }
 
+/* FOCUS */
 .form-group input:focus,
 .form-group select:focus{
-    border-color: white;
+
+    border-color: var(--text-color);
+
 }
 
 /* ROW */
 .form-row{
+
     display: flex;
+
     gap: 20px;
+
 }
 
-/* BOTON */
+/* CARD */
+#cardFields{
+
+    display: none;
+
+}
+
+/* BUTTON */
 .btn-pay{
+
     width: 100%;
+
     height: 60px;
 
     margin-top: 20px;
 
-    background-color: white;
-    color: black;
+    background-color: var(--button-bg);
+
+    color: var(--button-text);
 
     border: none;
 
-    font-size: 0.9rem;
     font-weight: 700;
 
     letter-spacing: 2px;
@@ -191,94 +316,147 @@ a{
     cursor: pointer;
 
     transition: 0.3s;
+
 }
 
 .btn-pay:hover{
-    background-color: #d9d9d9;
+
+    opacity: 0.85;
+
+}
+
+/* MESSAGE */
+.payment-message{
+
+    margin-top: 20px;
+
+    font-size: 0.95rem;
+
+    font-weight: 500;
+
+}
+
+.success{
+
+    color: var(--success-color);
+
+}
+
+.error{
+
+    color: var(--error-color);
+
 }
 
 /* =========================================================
-   RESUMEN
+   SUMMARY
 ========================================================= */
 
 .payment-summary{
+
     flex: 1;
 
-    background-color: #111;
+    background-color: var(--secondary-bg);
 
-    border: 1px solid #1d1d1d;
+    border: 1px solid var(--border-color);
 
     padding: 40px;
 
+    height: fit-content;
+
     position: sticky;
+
     top: 120px;
+
 }
 
-/* TITULO */
+/* TITLE */
 .payment-summary h2{
+
     font-size: 1.8rem;
+
     letter-spacing: 3px;
 
     margin-bottom: 35px;
+
 }
 
-/* PRODUCTO */
+/* PRODUCT */
 .summary-product{
+
     display: flex;
+
     align-items: center;
+
     gap: 15px;
 
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+
 }
 
-/* IMAGEN */
+/* IMAGE */
 .summary-product-image{
+
     width: 80px;
+
     height: 100px;
 
     overflow: hidden;
 
-    background-color: #191919;
+    background-color: var(--bg-color);
+
 }
 
 .summary-product-image img{
+
     width: 100%;
+
     height: 100%;
 
     object-fit: cover;
+
 }
 
 /* INFO */
 .summary-product-info{
+
     flex: 1;
+
 }
 
 .summary-product-info h3{
+
     font-size: 0.95rem;
 
     margin-bottom: 8px;
 
-    letter-spacing: 1px;
 }
 
 .summary-product-info p{
-    color: #8b8b8b;
+
+    color: var(--text-secondary);
 
     font-size: 0.85rem;
+
 }
 
 /* TOTAL */
 .payment-total{
+
     display: flex;
+
     justify-content: space-between;
 
-    border-top: 1px solid #222;
+    border-top: 1px solid var(--border-color);
 
     padding-top: 25px;
+
     margin-top: 40px;
 
     font-size: 1.3rem;
+
     font-weight: 700;
+
 }
 
 /* =========================================================
@@ -286,105 +464,85 @@ a{
 ========================================================= */
 
 .footer{
-    margin-top: 90px;
 
-    border-top: 1px solid #1a1a1a;
+    margin-top: 80px;
+
+    border-top: 1px solid var(--border-color);
 
     padding: 60px;
+
 }
 
+/* TOP */
 .footer-top{
+
     display: flex;
+
     justify-content: space-between;
-    align-items: center;
 
     margin-bottom: 40px;
+
 }
 
+/* BRAND */
 .footer-brand h2{
+
     font-size: 1.2rem;
+
     letter-spacing: 4px;
 
     margin-bottom: 10px;
+
 }
 
-.footer-brand p{
-    color: #777;
-}
-
+/* LINKS */
 .footer-links{
+
     display: flex;
+
     gap: 30px;
+
 }
 
 .footer-links a{
-    color: #c7c7c7;
 
-    transition: 0.3s;
+    color: var(--text-secondary);
+
 }
 
-.footer-links a:hover{
-    color: white;
-}
-
+/* BOTTOM */
 .footer-bottom{
-    border-top: 1px solid #1f1f1f;
+
+    border-top: 1px solid var(--border-color);
 
     padding-top: 30px;
 
-    color: #666;
+    color: var(--text-secondary);
 
     font-size: 0.9rem;
-}
 
+}
 /* =========================================================
-   RESPONSIVE
+   THEME BUTTON
 ========================================================= */
 
-@media(max-width: 1100px){
+.theme-btn{
 
-    .payment-container{
-        flex-direction: column;
-    }
+    width: 38px;
+    height: 38px;
 
-    .payment-summary{
-        width: 100%;
+    border-radius: 50%;
 
-        position: static;
-    }
+    border: 1px solid var(--border-color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 
-@media(max-width: 768px){
+.theme-btn:hover{
 
-    .header{
-        padding: 0 20px;
-    }
-
-    .header-menu{
-        display: none;
-    }
-
-    .payment-container{
-        padding: 30px 20px;
-    }
-
-    .payment-title h1{
-        font-size: 2.2rem;
-    }
-
-    .form-row{
-        flex-direction: column;
-    }
-
-    .footer{
-        padding: 40px 20px;
-    }
-
-    .footer-top{
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 25px;
-    }
+    background-color: var(--secondary-bg);
 
 }
