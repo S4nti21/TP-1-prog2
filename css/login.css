@@ -1,0 +1,39 @@
+/* ============================================================
+   login.css — Lana & Lino
+   Requiere: auth-base.css cargado antes
+   ============================================================ */
+
+.auth-card {
+  max-width: 420px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-form .btn-principal {
+  margin-top: 8px;
+}
+
+/* Enlace opcional "¿Olvidaste tu contraseña?" */
+.link-olvidaste {
+  display: inline-block;
+  align-self: flex-end;
+  font-size: 11px;
+  color: var(--c-suave);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  margin-top: -10px;
+  border-bottom: 1px solid transparent;
+  transition: color var(--trans), border-color var(--trans);
+}
+.link-olvidaste:hover {
+  color: var(--c-acento);
+  border-bottom-color: var(--c-acento);
+}
+
+@media (max-width: 520px) {
+  .auth-card { max-width: 100%; }
+}

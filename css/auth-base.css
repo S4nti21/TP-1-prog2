@@ -1,0 +1,332 @@
+/* ============================================================
+   auth-base.css — Lana & Lino
+   Layout: fondo fullscreen difuminado + card centrada
+   ============================================================ */
+
+/* Barlow Condensed: grotesca condensada estilo streetwear europeo
+   Barlow: cuerpo limpio y funcional                                */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap');
+
+/* ---------- Tokens ---------- */
+:root {
+  --c-fondo:        #F7F5F0;
+  --c-superficie:   rgba(255, 255, 255, 0.82);
+  --c-superficie-borde: rgba(255,255,255,0.5);
+  --c-texto:        #1A1A18;
+  --c-suave:        #6E6A62;
+  --c-linea:        rgba(210, 205, 195, 0.8);
+  --c-acento:       #563a77;
+  --c-acento-hover: #351e3e;
+  --c-error:        #B33A3A;
+  --c-exito:        #3A7A5A;
+
+  --f-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --f-body:    "Barlow", "Helvetica Neue", Arial, sans-serif;
+
+  --r-tarjeta: 3px;
+  --trans: 220ms ease;
+
+  /* Imagen de fondo — reemplazá con tu URL real */
+  --bg-imagen: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80');
+}
+
+[data-modo="oscuro"] {
+  --c-superficie:       rgba(18, 18, 16, 0.85);
+  --c-superficie-borde: rgba(255,255,255,0.08);
+  --c-texto:            #EDE9E0;
+  --c-suave:            #8A8678;
+  --c-linea:            rgba(80,78,72,0.8);
+  --c-acento:           #B06060;
+  --c-acento-hover:     #C97878;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ---------- Body con fondo fullscreen ---------- */
+body {
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--c-texto);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* --- Capa 1: imagen de fondo con blur --- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--bg-imagen);
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) saturate(0.7) brightness(0.75);
+  transform: scale(1.08); /* cubre el overflow del blur */
+  z-index: -2;
+}
+
+/* --- Capa 2: grain/glitch noise encima --- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.55;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
+/* --- Capa 3: overlay de color para legibilidad --- */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 8, 6, 0.45) 0%,
+    rgba(30, 20, 16, 0.38) 100%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ---------- Botón modo ---------- */
+.btn-modo {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 100px;
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background var(--trans), border-color var(--trans), color var(--trans);
+}
+.btn-modo:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+.btn-modo__icono { font-size: 13px; line-height: 1; }
+
+/* ---------- Contenedor de la página ---------- */
+.auth-pagina {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ---------- Card glass ---------- */
+.auth-card {
+  width: 100%;
+  background: var(--c-superficie);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--c-superficie-borde);
+  border-radius: 10px;
+  padding: 52px 48px;
+  box-shadow:
+    0 2px 0 rgba(148, 148, 148, 0.6) inset,
+    0 24px 64px rgba(0,0,0,0.28);
+  position: relative;
+}
+
+/* Línea vino arriba de la card — firma de marca */
+.auth-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 48px;
+  right: 48px;
+  height: 2px;
+  background: var(--c-acento);
+  border-radius: 0 0 2px 2px;
+}
+
+/* ---------- Marca dentro de la card ---------- */
+.auth-card__marca {
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--c-acento);
+  margin-bottom: 28px;
+  display: block;
+}
+
+.auth-card__titulo {
+  font-family: var(--f-display);
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-texto);
+  margin-bottom: 10px;
+}
+
+.auth-card__subtitulo {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--c-suave);
+  margin-bottom: 32px;
+}
+.auth-card__subtitulo a {
+  color: var(--c-acento);
+  text-decoration: none;
+  font-weight: 400;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--trans);
+}
+.auth-card__subtitulo a:hover { border-bottom-color: var(--c-acento); }
+
+/* ---------- Campos ---------- */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.campo label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-suave);
+}
+.campo input {
+  width: 100%;
+  padding: 11px 14px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid var(--c-linea);
+  border-radius: var(--r-tarjeta);
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--c-texto);
+  outline: none;
+  transition: border-color var(--trans), box-shadow var(--trans), background var(--trans);
+}
+[data-modo="oscuro"] .campo input {
+  background: rgba(255,255,255,0.06);
+}
+.campo input::placeholder { color: #bbb8b0; }
+.campo input:focus {
+  background: rgba(255,255,255,0.85);
+  border-color: var(--c-acento);
+  box-shadow: 0 0 0 3px rgba(92,45,45,0.1);
+}
+[data-modo="oscuro"] .campo input:focus {
+  background: rgba(255,255,255,0.1);
+}
+.campo--error input { border-color: var(--c-error); }
+.campo__error {
+  font-size: 11px;
+  color: var(--c-error);
+  min-height: 14px;
+}
+
+/* ---------- Mensaje global ---------- */
+.mensaje {
+  padding: 11px 14px;
+  border-radius: var(--r-tarjeta);
+  font-size: 13px;
+  font-weight: 400;
+  display: none;
+}
+.mensaje.visible        { display: block; }
+.mensaje.mensaje--error { background: rgba(179,58,58,0.1); color: var(--c-error); border-left: 3px solid var(--c-error); }
+.mensaje.mensaje--exito { background: rgba(58,122,90,0.1); color: var(--c-exito); border-left: 3px solid var(--c-exito); }
+
+/* ---------- Botones ---------- */
+.btn-principal {
+  width: 100%;
+  padding: 13px;
+  background: var(--c-acento);
+  color: #F7F5F0;
+  border: 1px solid var(--c-acento);
+  border-radius: var(--r-tarjeta);
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--trans), border-color var(--trans), transform 80ms;
+}
+.btn-principal:hover { background: var(--c-acento-hover); border-color: var(--c-acento-hover); }
+.btn-principal:active { transform: scale(0.99); }
+.btn-principal:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-secundario {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  color: var(--c-texto);
+  border: 1px solid var(--c-linea);
+  border-radius: var(--r-tarjeta);
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--trans);
+}
+.btn-secundario:hover { border-color: var(--c-texto); }
+
+/* ---------- Divisor ---------- */
+.divisor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-suave);
+}
+.divisor::before,
+.divisor::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--c-linea);
+}
+
+/* ---------- Accesibilidad ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+:focus-visible { outline: 2px solid var(--c-acento); outline-offset: 3px; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 520px) {
+  body { padding: 16px; }
+  .auth-card { padding: 40px 24px 36px; }
+  .auth-card::before { left: 24px; right: 24px; }
+  .btn-modo { top: 12px; right: 12px; }
+}
