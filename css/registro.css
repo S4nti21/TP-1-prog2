@@ -1,0 +1,41 @@
+/* ============================================================
+   registro.css — Lana & Lino
+   Requiere: auth-base.css cargado antes
+   ============================================================ */
+
+.auth-card {
+  max-width: 540px;
+}
+
+/* Grid de dos columnas */
+.auth-form--dos-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 20px;
+}
+
+.campo-completo {
+  grid-column: 1 / -1;
+}
+
+.auth-form--dos-col .btn-principal {
+  margin-top: 4px;
+}
+
+/* Botón secundario usado como <a> en el HTML */
+.auth-form--dos-col .btn-secundario {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  padding: 12px;
+}
+
+/* ---------- Mobile: una columna ---------- */
+@media (max-width: 600px) {
+  .auth-card { max-width: 100%; }
+  .auth-form--dos-col {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .campo-completo { grid-column: 1; }
+}

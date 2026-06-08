@@ -4,9 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iniciar Sesión - Lana & Lino</title>
-  <link rel="stylesheet" href="../css/auth.css" />
+  <link rel="stylesheet" href="../css/auth-base.css" />
+  <link rel="stylesheet" href="../css/login.css" />
 </head>
 <body>
+
+  <div class="auth-overlay"></div>
 
   <button class="btn-modo" id="btnModo" type="button">
     <span class="btn-modo__icono" id="iconoModo">☀️</span>
@@ -14,17 +17,10 @@
   </button>
 
   <div class="auth-pagina">
-
-    <aside class="auth-panel-deco">
-      <div class="auth-panel-deco__linea"></div>
-      <h1 class="auth-panel-deco__marca">Lana<br>&amp;<br>Lino</h1>
-      <p class="auth-panel-deco__tagline">Indumentaria de autor</p>
-      <div class="auth-panel-deco__linea"></div>
-    </aside>
-
     <main class="auth-panel-form">
       <div class="auth-card">
 
+        <span class="auth-card__marca">Lana &amp; Lino</span>
         <h2 class="auth-card__titulo">Bienvenido</h2>
         <p class="auth-card__subtitulo">
           ¿No tenés cuenta?
@@ -45,6 +41,8 @@
             <span class="campo__error" id="errorPassword"></span>
           </div>
 
+          <a href="#" class="link-olvidaste">¿Olvidaste tu contraseña?</a>
+
           <div class="mensaje" id="mensajeGlobal"></div>
 
           <button type="submit" class="btn-principal" id="btnLogin">
@@ -55,7 +53,6 @@
 
       </div>
     </main>
-
   </div>
 
   <script src="../js/auth.js"></script>
