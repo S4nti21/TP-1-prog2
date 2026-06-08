@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" data-modo="claro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Perfil - Lana & Lino</title>
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body>
+
+  <button class="btn-modo" id="btnModo" type="button">
+    <span class="btn-modo__icono" id="iconoModo">☀️</span>
+    <span class="btn-modo__texto">Modo</span>
+  </button>
+
+  <!-- Pantalla de carga -->
+  <div id="cargandoPerfil" style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--color-texto-suave);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;">
+    Cargando perfil...
+  </div>
+
+  <!-- Contenido del perfil (oculto hasta que cargue) -->
+  <main class="perfil-pagina" id="paginaPerfil" style="display: none;">
+
+    <header class="perfil-header">
+      <p class="perfil-header__marca">Lana &amp; Lino</p>
+      <h1 class="perfil-header__titulo">Mi Perfil</h1>
+    </header>
+
+    <!-- Avatar con iniciales -->
+    <div class="perfil-avatar" id="avatarIniciales">??</div>
+
+    <!-- Sección de datos personales -->
+    <section class="perfil-seccion" id="seccionDatos">
+      <h2 class="perfil-seccion__titulo">Datos personales</h2>
+
+      <div class="perfil-datos-grid">
+
+        <div class="campo dato-lectura">
+          <span class="dato-lectura__etiqueta">Nombre</span>
+          <span class="dato-lectura__valor" id="verNombre">—</span>
+          <input type="text" id="editNombre" placeholder="Nombre" />
+          <span class="campo__error" id="errorNombre"></span>
+        </div>
+
+        <div class="campo dato-lectura">
+          <span class="dato-lectura__etiqueta">Apellido</span>
+          <span class="dato-lectura__valor" id="verApellido">—</span>
+          <input type="text" id="editApellido" placeholder="Apellido" />
+          <span class="campo__error" id="errorApellido"></span>
+        </div>
+
+        <!-- El email no se puede editar -->
+        <div class="dato-lectura" style="grid-column: 1 / -1;">
+          <span class="dato-lectura__etiqueta">Email</span>
+          <span class="dato-lectura__valor" id="verEmail">—</span>
+        </div>
+
+        <div class="campo dato-lectura">
+          <span class="dato-lectura__etiqueta">Teléfono</span>
+          <span class="dato-lectura__valor" id="verTelefono">—</span>
+          <input type="tel" id="editTelefono" placeholder="Teléfono" />
+          <span class="campo__error" id="errorTelefono"></span>
+        </div>
+
+        <div class="campo dato-lectura">
+          <span class="dato-lectura__etiqueta">Dirección</span>
+          <span class="dato-lectura__valor" id="verDireccion">—</span>
+          <input type="text" id="editDireccion" placeholder="Dirección" />
+          <span class="campo__error" id="errorDireccion"></span>
+        </div>
+
+      </div>
+
+      <div class="mensaje" id="mensajePerfil" style="margin-top: 1rem;"></div>
+
+      <div class="perfil-acciones" style="margin-top: 1.5rem;">
+        <button class="btn-principal" id="btnEditar" type="button">Editar datos</button>
+        <button class="btn-principal" id="btnGuardar" type="button" style="display: none;">Guardar cambios</button>
+        <button class="btn-secundario" id="btnCancelar" type="button" style="display: none;">Cancelar</button>
+      </div>
+    </section>
+
+    <!-- Sección de acciones de cuenta -->
+    <section class="perfil-seccion">
+      <h2 class="perfil-seccion__titulo">Cuenta</h2>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="../index.html" class="btn-secundario"
+          style="text-decoration: none; text-align: center; flex: 1; min-width: 140px; display: block; padding: 0.75rem;">
+          ← Volver al inicio
+        </a>
+        <button class="btn-cerrar-sesion" id="btnCerrarSesion" type="button" style="flex: 1; min-width: 140px;">
+          Cerrar sesión
+        </button>
+      </div>
+    </section>
+
+    <!-- Solo visible para administradores -->
+    <section class="perfil-seccion" data-rol="admin" style="display: none;">
+      <h2 class="perfil-seccion__titulo">Administración</h2>
+      <p style="font-size: 0.875rem; color: var(--color-texto-suave); margin-bottom: 1rem;">
+        Tenés permisos de administrador.
+      </p>
+      <a href="admin.html" class="btn-principal"
+        style="text-decoration: none; text-align: center; display: block;">
+        Gestionar productos
+      </a>
+    </section>
+
+  </main>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/perfil.js"></script>
+
+</body>
+</html>
