@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Pago | Lana & Lino</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/pago.css">
+
+    <!-- ICONOS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <!-- LOGO -->
+        <div class="header-logo">
+
+            <a href="../index.html">
+                LANA & LINO
+            </a>
+
+        </div>
+
+        <!-- MENU -->
+        <nav class="header-menu">
+
+            <a href="#">SHOP</a>
+            <a href="#">NEW</a>
+            <a href="#">FAVORITOS</a>
+
+        </nav>
+
+        <!-- ICONOS -->
+        <div class="header-icons">
+
+            <a href="#">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+
+            <a href="#">
+                <i class="fa-regular fa-user"></i>
+            </a>
+
+            <a href="./carrito.html">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+            </a>
+
+        </div>
+
+    </header>
+
+    <!-- MAIN -->
+    <main class="payment-container">
+
+        <!-- IZQUIERDA -->
+        <section class="payment-form-section">
+
+            <div class="payment-title">
+
+                <h1>PAGO</h1>
+
+                <p>
+                    Completa los datos para finalizar tu compra.
+                </p>
+
+            </div>
+
+            <!-- FORM -->
+            <form class="payment-form">
+
+                <!-- METODO -->
+                <div class="form-group">
+
+                    <label for="paymentMethod">
+
+                        Método de pago
+
+                    </label>
+
+                    <select id="paymentMethod">
+
+                        <option value="">
+                            Seleccionar
+                        </option>
+
+                        <option value="transferencia">
+                            Transferencia
+                        </option>
+
+                        <option value="debito">
+                            Débito
+                        </option>
+
+                        <option value="credito">
+                            Crédito
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- TARJETA -->
+                <div class="card-fields">
+
+                    <!-- NUMERO -->
+                    <div class="form-group">
+
+                        <label for="cardNumber">
+
+                            Número de tarjeta
+
+                        </label>
+
+                        <input type="text"
+                            id="cardNumber"
+                            placeholder="1234 5678 9012 3456">
+
+                    </div>
+
+                    <!-- NOMBRE -->
+                    <div class="form-group">
+
+                        <label for="cardName">
+
+                            Nombre del titular
+
+                        </label>
+
+                        <input type="text"
+                            id="cardName"
+                            placeholder="Juan Pérez">
+
+                    </div>
+
+                    <!-- FECHA -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="cardDate">
+
+                                Vencimiento
+
+                            </label>
+
+                            <input type="text"
+                                id="cardDate"
+                                placeholder="MM/AA">
+
+                        </div>
+
+                        <!-- CVV -->
+                        <div class="form-group">
+
+                            <label for="cardCvv">
+
+                                CVV
+
+                            </label>
+
+                            <input type="text"
+                                id="cardCvv"
+                                placeholder="123">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- BOTON -->
+                <button class="btn-pay"
+                    type="submit">
+
+                    PAGAR
+
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- DERECHA -->
+        <aside class="payment-summary">
+
+            <h2>RESUMEN</h2>
+
+            <!-- PRODUCTO -->
+            <div class="summary-product">
+
+                <div class="summary-product-image">
+
+                    <img src="../img/remera.jpg"
+                        alt="Remera">
+
+                </div>
+
+                <div class="summary-product-info">
+
+                    <h3>REMERA OVERSIZE</h3>
+
+                    <p>Talle M</p>
+
+                </div>
+
+                <span>$25.000</span>
+
+            </div>
+
+            <!-- PRODUCTO -->
+            <div class="summary-product">
+
+                <div class="summary-product-image">
+
+                    <img src="../img/buzo.jpg"
+                        alt="Buzo">
+
+                </div>
+
+                <div class="summary-product-info">
+
+                    <h3>BUZO ESSENTIAL</h3>
+
+                    <p>Talle L</p>
+
+                </div>
+
+                <span>$40.000</span>
+
+            </div>
+
+            <!-- TOTAL -->
+            <div class="payment-total">
+
+                <span>Total</span>
+
+                <span>$65.000</span>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div class="footer-top">
+
+            <div class="footer-brand">
+
+                <h2>LANA & LINO</h2>
+
+                <p>
+                    Streetwear & Urban Style
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <a href="#">Instagram</a>
+                <a href="#">TikTok</a>
+                <a href="#">Contacto</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Lana & Lino - Grupo 4
+            </p>
+
+        </div>
+
+    </footer>
+
+    <!-- JS -->
+    <script src="../js/pago.js"></script>
+
+</body>
+
+</html>
