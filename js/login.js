@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Si ya hay sesión iniciada, mandar al inicio
     if (Auth.verificarSesion(false)) {
-        window.location.href = "../index.html";
+        window.location.href = "./index.html";
         return;
     }
 
@@ -135,7 +135,8 @@ function cambiarModo() {
 
 // Actualiza el ícono del botón de modo
 function actualizarIconoModo() {
-    var modo = document.documentElement.getAttribute("data-modo");
     var icono = document.getElementById("iconoModo");
+    if (!icono) return;
+    var modo = document.documentElement.getAttribute("data-modo");
     icono.textContent = modo === "oscuro" ? "🌙" : "☀️";
 }

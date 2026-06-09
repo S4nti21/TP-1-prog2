@@ -10,12 +10,14 @@
 // ============================================================
 // CONFIGURACIÓN — EDITAR AQUÍ LA URL DEL BACKEND
 // ============================================================
-const BASE_URL = "http://localhost:3000/api"; // <-- CAMBIAR POR LA URL REAL
+const BASE_URL = "http://localhost:4000/api"; // <-- CAMBIAR POR LA URL REAL
 
+// Rutas reales del backend
 const API_ENDPOINTS = {
-  login:    `${BASE_URL}/usuarios/login`,
-  registro: `${BASE_URL}/usuarios/registro`,
-  perfil:   `${BASE_URL}/usuarios`,  // se concatenará /{id}
+  login:    `${BASE_URL}/login`,
+  registro: `${BASE_URL}/registrarUsuario`,
+  perfil:   `${BASE_URL}/obtenerDatosUsuario`,   // + /:id
+  modificar:`${BASE_URL}/modificarUsuario`,       // + /:id
 };
 
 const STORAGE_KEY = "lanaLino_usuario";
@@ -77,10 +79,30 @@ function aplicarPermisosPorRol() {
 }
 
 // ============================================================
+// FETCH CON TOKEN
+// Usar esta función para todos los endpoints protegidos.
+// Agrega automáticamente el header Authorization con el JWT.
+// ============================================================
+
+async function fetchConToken(url, opciones = {}) {
+  const usuario = obtenerUsuarioLogueado();
+  const headers = {
+    "Content-Type": "application/json",
+    ...opciones.headers,
+  };
+  if (usuario?.token) {
+    headers["Authorization"] = usuario.token;
+  }
+  return fetch(url, { ...opciones, headers });
+}
+
+// ============================================================
 // LLAMADAS A LA API
 // ============================================================
 
 async function loginUsuario(email, password) {
+  // El backend recibe { email, password } y devuelve:
+  // { codigo, mensaje, payload: [{ id_usuario, nombre, apellido, rol }], jwt }
   const respuesta = await fetch(API_ENDPOINTS.login, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -88,42 +110,67 @@ async function loginUsuario(email, password) {
   });
 
   const datos = await respuesta.json();
-  if (!respuesta.ok) throw new Error(datos.mensaje || datos.message || "Credenciales incorrectas.");
-  return datos;
+
+  // El backend devuelve codigo -1 cuando las credenciales son incorrectas (HTTP 200 igual)
+  if (datos.codigo === -1 || !datos.payload || datos.payload.length === 0) {
+    throw new Error(datos.mensaje || "Credenciales incorrectas.");
+  }
+
+  // Armar objeto de sesión unificado con los datos del usuario + el token
+  const usuario = datos.payload[0];
+  return {
+    id_usuario: usuario.id_usuario,
+    nombre:     usuario.nombre,
+    apellido:   usuario.apellido,
+    rol:        usuario.rol,
+    token:      datos.jwt,
+  };
 }
 
 async function registrarUsuario(datosUsuario) {
+  // El backend recibe: { nombre, apellido, direccion, email, telefono, rol, password }
+  // El rol para usuarios normales siempre es "usuario"
+  const payload = {
+    ...datosUsuario,
+    rol: datosUsuario.rol || "usuario",
+  };
+
   const respuesta = await fetch(API_ENDPOINTS.registro, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(datosUsuario),
+    body: JSON.stringify(payload),
   });
 
   const datos = await respuesta.json();
-  if (!respuesta.ok) throw new Error(datos.mensaje || datos.message || "No se pudo registrar el usuario.");
+  if (datos.codigo === -1) {
+    throw new Error(datos.mensaje || "No se pudo registrar el usuario.");
+  }
   return datos;
 }
 
 async function obtenerPerfil(idUsuario) {
-  const respuesta = await fetch(`${API_ENDPOINTS.perfil}/${idUsuario}`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
+  // GET /api/obtenerDatosUsuario/:id  — requiere token
+  const respuesta = await fetchConToken(`${API_ENDPOINTS.perfil}/${idUsuario}`);
 
   const datos = await respuesta.json();
-  if (!respuesta.ok) throw new Error(datos.mensaje || datos.message || "No se pudo obtener el perfil.");
-  return datos;
+  if (datos.codigo === -1) {
+    throw new Error(datos.mensaje || "No se pudo obtener el perfil.");
+  }
+  // El backend devuelve el usuario en payload (array de 1 elemento)
+  return Array.isArray(datos.payload) ? datos.payload[0] : datos.payload;
 }
 
 async function actualizarPerfil(idUsuario, datosActualizados) {
-  const respuesta = await fetch(`${API_ENDPOINTS.perfil}/${idUsuario}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
+  // POST /api/modificarUsuario/:id  — requiere token (el backend usa POST, no PUT)
+  const respuesta = await fetchConToken(`${API_ENDPOINTS.modificar}/${idUsuario}`, {
+    method: "POST",
     body: JSON.stringify(datosActualizados),
   });
 
   const datos = await respuesta.json();
-  if (!respuesta.ok) throw new Error(datos.mensaje || datos.message || "No se pudo actualizar el perfil.");
+  if (datos.codigo === -1) {
+    throw new Error(datos.mensaje || "No se pudo actualizar el perfil.");
+  }
   return datos;
 }
 
@@ -172,6 +219,7 @@ function setBotonCargando(boton, cargando, textoOriginal = "Enviar") {
 window.Auth = {
   BASE_URL,
   API_ENDPOINTS,
+  fetchConToken,
   guardarSesion,
   obtenerUsuarioLogueado,
   verificarSesion,
