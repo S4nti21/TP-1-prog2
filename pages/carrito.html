@@ -1,15 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>Carrito | Lana & Lino</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/carrito.css">
 
     <!-- ICONOS -->
@@ -20,7 +22,10 @@
 
 <body>
 
-    <!-- HEADER -->
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
     <header class="header">
 
         <!-- LOGO -->
@@ -36,7 +41,9 @@
         <nav class="header-menu">
 
             <a href="#">SHOP</a>
+
             <a href="#">NEW</a>
+
             <a href="#">FAVORITOS</a>
 
         </nav>
@@ -44,27 +51,49 @@
         <!-- ICONOS -->
         <div class="header-icons">
 
-            <a href="#">
+            <!-- BUSCAR -->
+            <button class="icon-btn">
+
                 <i class="fa-solid fa-magnifying-glass"></i>
-            </a>
 
-            <a href="#">
+            </button>
+
+            <!-- USER -->
+            <button class="icon-btn">
+
                 <i class="fa-regular fa-user"></i>
-            </a>
 
-            <a href="#" class="cart-icon">
+            </button>
+
+            <!-- MODO -->
+            <button
+                id="themeButton"
+                class="icon-btn theme-btn">
+
+                <i
+                    id="themeIcon"
+                    class="fa-solid fa-moon">
+
+                </i>
+
+            </button>
+            <!-- CARRITO -->
+            <div class="cart-icon">
 
                 <i class="fa-solid fa-bag-shopping"></i>
 
-                <span>2</span>
+                <span id="cartCounter">0</span>
 
-            </a>
+            </div>
 
         </div>
 
     </header>
 
-    <!-- MAIN -->
+    <!-- =========================================================
+         MAIN
+    ========================================================= -->
+
     <main class="cart-container">
 
         <!-- IZQUIERDA -->
@@ -75,117 +104,18 @@
 
                 <h1>CARRITO</h1>
 
-                <p>2 productos agregados</p>
+                <p id="cartSubtitle">
+                    0 productos agregados
+                </p>
 
             </div>
 
-            <!-- PRODUCTO -->
-            <article class="cart-product">
+            <!-- PRODUCTOS -->
+            <div id="cartProducts">
 
-                <!-- IMAGEN -->
-                <div class="cart-product-image">
+                <!-- JS -->
 
-                    <img src="../img/remera.jpg"
-                        alt="Remera Oversize Negra">
-
-                </div>
-
-                <!-- INFO -->
-                <div class="cart-product-info">
-
-                    <div class="cart-product-top">
-
-                        <div>
-
-                            <h2>REMERA OVERSIZE</h2>
-
-                            <p class="product-category">
-                                Streetwear
-                            </p>
-
-                        </div>
-
-                        <button class="btn-remove">
-
-                            <i class="fa-solid fa-xmark"></i>
-
-                        </button>
-
-                    </div>
-
-                    <!-- DETALLES -->
-                    <div class="product-details">
-
-                        <p>Talle: M</p>
-
-                        <p>Color: Negro</p>
-
-                        <p>Cantidad: 1</p>
-
-                    </div>
-
-                    <!-- PRECIO -->
-                    <div class="product-price">
-
-                        $25.000
-
-                    </div>
-
-                </div>
-
-            </article>
-
-            <!-- PRODUCTO -->
-            <article class="cart-product">
-
-                <div class="cart-product-image">
-
-                    <img src="../img/buzo.jpg"
-                        alt="Buzo Beige">
-
-                </div>
-
-                <div class="cart-product-info">
-
-                    <div class="cart-product-top">
-
-                        <div>
-
-                            <h2>BUZO ESSENTIAL</h2>
-
-                            <p class="product-category">
-                                Oversize
-                            </p>
-
-                        </div>
-
-                        <button class="btn-remove">
-
-                            <i class="fa-solid fa-xmark"></i>
-
-                        </button>
-
-                    </div>
-
-                    <div class="product-details">
-
-                        <p>Talle: L</p>
-
-                        <p>Color: Beige</p>
-
-                        <p>Cantidad: 1</p>
-
-                    </div>
-
-                    <div class="product-price">
-
-                        $40.000
-
-                    </div>
-
-                </div>
-
-            </article>
+            </div>
 
         </section>
 
@@ -199,7 +129,9 @@
 
                 <span>Subtotal</span>
 
-                <span>$65.000</span>
+                <span id="subtotal">
+                    $0
+                </span>
 
             </div>
 
@@ -208,7 +140,9 @@
 
                 <span>Envío</span>
 
-                <span>Gratis</span>
+                <span>
+                    Gratis
+                </span>
 
             </div>
 
@@ -217,21 +151,22 @@
 
                 <span>Total</span>
 
-                <span>$65.000</span>
+                <span id="total">
+                    $0
+                </span>
 
             </div>
 
             <!-- BOTON -->
-            <a href="./pago.html">
+            <button
+                id="checkoutButton"
+                class="btn-checkout">
 
-                <button class="btn-checkout">
+                FINALIZAR COMPRA
 
-                    FINALIZAR COMPRA
+            </button>
 
-                </button>
-
-            </a>
-
+            <!-- TEXTO -->
             <p class="summary-text">
 
                 Los impuestos y costos de envío
@@ -243,11 +178,15 @@
 
     </main>
 
-    <!-- FOOTER -->
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
     <footer class="footer">
 
         <div class="footer-top">
 
+            <!-- BRAND -->
             <div class="footer-brand">
 
                 <h2>LANA & LINO</h2>
@@ -258,16 +197,26 @@
 
             </div>
 
+            <!-- LINKS -->
             <div class="footer-links">
 
-                <a href="#">Instagram</a>
-                <a href="#">TikTok</a>
-                <a href="#">Contacto</a>
+                <a href="#">
+                    Instagram
+                </a>
+
+                <a href="#">
+                    TikTok
+                </a>
+
+                <a href="#">
+                    Contacto
+                </a>
 
             </div>
 
         </div>
 
+        <!-- BOTTOM -->
         <div class="footer-bottom">
 
             <p>
@@ -278,9 +227,13 @@
 
     </footer>
 
+    <!-- AUTH -->
+    <script src="../js/auth.js"></script>
+
     <!-- JS -->
     <script src="../js/carrito.js"></script>
 
 </body>
 
 </html>
+```

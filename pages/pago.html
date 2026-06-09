@@ -1,19 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
     <title>Pago | Lana & Lino</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/global.css">
+
     <link rel="stylesheet" href="../css/pago.css">
 
-    <!-- ICONOS -->
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -21,7 +22,10 @@
 
 <body>
 
-    <!-- HEADER -->
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
     <header class="header">
 
         <!-- LOGO -->
@@ -37,7 +41,9 @@
         <nav class="header-menu">
 
             <a href="#">SHOP</a>
+
             <a href="#">NEW</a>
+
             <a href="#">FAVORITOS</a>
 
         </nav>
@@ -45,15 +51,35 @@
         <!-- ICONOS -->
         <div class="header-icons">
 
-            <a href="#">
+            <!-- BUSCAR -->
+            <button class="icon-btn">
+
                 <i class="fa-solid fa-magnifying-glass"></i>
-            </a>
 
-            <a href="#">
+            </button>
+
+            <!-- USER -->
+            <button class="icon-btn">
+
                 <i class="fa-regular fa-user"></i>
-            </a>
 
-            <a href="./carrito.html">
+            </button>
+
+            <!-- MODO -->
+                    <button
+                    id="themeButton"
+                    class="icon-btn theme-btn">
+
+                    <i
+                        id="themeIcon"
+                        class="fa-solid fa-moon">
+
+                    </i>
+
+</button>
+            <!-- CARRITO -->
+            <a href="./carrito.html"
+                class="cart-icon">
 
                 <i class="fa-solid fa-bag-shopping"></i>
 
@@ -63,24 +89,32 @@
 
     </header>
 
-    <!-- MAIN -->
+    <!-- =========================================================
+         MAIN
+    ========================================================= -->
+
     <main class="payment-container">
 
-        <!-- IZQUIERDA -->
+        <!-- =====================================================
+             IZQUIERDA
+        ====================================================== -->
+
         <section class="payment-form-section">
 
+            <!-- TITULO -->
             <div class="payment-title">
 
                 <h1>PAGO</h1>
 
                 <p>
-                    Completa los datos para finalizar tu compra.
+                    Completa los datos para finalizar la compra.
                 </p>
 
             </div>
 
             <!-- FORM -->
-            <form class="payment-form">
+            <form id="paymentForm"
+                class="payment-form">
 
                 <!-- METODO -->
                 <div class="form-group">
@@ -113,8 +147,8 @@
 
                 </div>
 
-                <!-- TARJETA -->
-                <div class="card-fields">
+                <!-- CAMPOS TARJETA -->
+                <div id="cardFields">
 
                     <!-- NUMERO -->
                     <div class="form-group">
@@ -125,13 +159,14 @@
 
                         </label>
 
-                        <input type="text"
+                        <input
+                            type="text"
                             id="cardNumber"
                             placeholder="1234 5678 9012 3456">
 
                     </div>
 
-                    <!-- NOMBRE -->
+                    <!-- TITULAR -->
                     <div class="form-group">
 
                         <label for="cardName">
@@ -140,15 +175,17 @@
 
                         </label>
 
-                        <input type="text"
+                        <input
+                            type="text"
                             id="cardName"
                             placeholder="Juan Pérez">
 
                     </div>
 
-                    <!-- FECHA -->
+                    <!-- FILA -->
                     <div class="form-row">
 
+                        <!-- FECHA -->
                         <div class="form-group">
 
                             <label for="cardDate">
@@ -157,7 +194,8 @@
 
                             </label>
 
-                            <input type="text"
+                            <input
+                                type="text"
                                 id="cardDate"
                                 placeholder="MM/AA">
 
@@ -172,7 +210,8 @@
 
                             </label>
 
-                            <input type="text"
+                            <input
+                                type="text"
                                 id="cardCvv"
                                 placeholder="123">
 
@@ -182,9 +221,17 @@
 
                 </div>
 
+                <!-- MENSAJE -->
+                <div
+                    id="paymentMessage"
+                    class="payment-message">
+
+                </div>
+
                 <!-- BOTON -->
-                <button class="btn-pay"
-                    type="submit">
+                <button
+                    type="submit"
+                    class="btn-pay">
 
                     PAGAR
 
@@ -194,52 +241,18 @@
 
         </section>
 
-        <!-- DERECHA -->
+        <!-- =====================================================
+             DERECHA
+        ====================================================== -->
+
         <aside class="payment-summary">
 
             <h2>RESUMEN</h2>
 
-            <!-- PRODUCTO -->
-            <div class="summary-product">
+            <!-- PRODUCTOS -->
+            <div id="summaryProducts">
 
-                <div class="summary-product-image">
-
-                    <img src="../img/remera.jpg"
-                        alt="Remera">
-
-                </div>
-
-                <div class="summary-product-info">
-
-                    <h3>REMERA OVERSIZE</h3>
-
-                    <p>Talle M</p>
-
-                </div>
-
-                <span>$25.000</span>
-
-            </div>
-
-            <!-- PRODUCTO -->
-            <div class="summary-product">
-
-                <div class="summary-product-image">
-
-                    <img src="../img/buzo.jpg"
-                        alt="Buzo">
-
-                </div>
-
-                <div class="summary-product-info">
-
-                    <h3>BUZO ESSENTIAL</h3>
-
-                    <p>Talle L</p>
-
-                </div>
-
-                <span>$40.000</span>
+                <!-- JS -->
 
             </div>
 
@@ -248,7 +261,9 @@
 
                 <span>Total</span>
 
-                <span>$65.000</span>
+                <span id="paymentTotal">
+                    $0
+                </span>
 
             </div>
 
@@ -256,11 +271,15 @@
 
     </main>
 
-    <!-- FOOTER -->
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
     <footer class="footer">
 
         <div class="footer-top">
 
+            <!-- BRAND -->
             <div class="footer-brand">
 
                 <h2>LANA & LINO</h2>
@@ -271,16 +290,26 @@
 
             </div>
 
+            <!-- LINKS -->
             <div class="footer-links">
 
-                <a href="#">Instagram</a>
-                <a href="#">TikTok</a>
-                <a href="#">Contacto</a>
+                <a href="#">
+                    Instagram
+                </a>
+
+                <a href="#">
+                    TikTok
+                </a>
+
+                <a href="#">
+                    Contacto
+                </a>
 
             </div>
 
         </div>
 
+        <!-- BOTTOM -->
         <div class="footer-bottom">
 
             <p>
@@ -291,9 +320,13 @@
 
     </footer>
 
+    <!-- AUTH -->
+    <script src="../js/auth.js"></script>
+
     <!-- JS -->
     <script src="../js/pago.js"></script>
 
 </body>
 
 </html>
+```
