@@ -5,7 +5,7 @@
 var usuarioActual = null;
 
 
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async function () {
 
     Auth.inicializarModo();
     actualizarIconoModo();
@@ -54,7 +54,7 @@ async function cargarPerfil() {
 
     // Ocultar el loading y mostrar el contenido
     document.getElementById("cargandoPerfil").style.display = "none";
-    document.getElementById("paginaPerfil").style.display   = "block";
+    document.getElementById("paginaPerfil").style.display = "block";
 
 }
 
@@ -62,22 +62,23 @@ async function cargarPerfil() {
 // Rellena el HTML con los datos del usuario
 function mostrarDatosPerfil(usuario) {
 
-    document.getElementById("verNombre").textContent    = usuario.nombre    || "—";
-    document.getElementById("verApellido").textContent  = usuario.apellido  || "—";
-    document.getElementById("verEmail").textContent     = usuario.email     || "—";
-    document.getElementById("verTelefono").textContent  = usuario.telefono  || "—";
+    document.getElementById("verNombre").textContent = usuario.nombre || "—";
+    document.getElementById("verApellido").textContent = usuario.apellido || "—";
+    document.getElementById("verEmail").textContent = usuario.email || "—";
+    document.getElementById("verTelefono").textContent = usuario.telefono || "—";
     document.getElementById("verDireccion").textContent = usuario.direccion || "—";
 
     // Cargar los valores en los inputs de edición también
-    document.getElementById("editNombre").value    = usuario.nombre    || "";
-    document.getElementById("editApellido").value  = usuario.apellido  || "";
-    document.getElementById("editTelefono").value  = usuario.telefono  || "";
+    document.getElementById("editNombre").value = usuario.nombre || "";
+    document.getElementById("editApellido").value = usuario.apellido || "";
+    document.getElementById("editTelefono").value = usuario.telefono || "";
     document.getElementById("editDireccion").value = usuario.direccion || "";
 
     // Mostrar iniciales en el avatar
-    var inicial1 = usuario.nombre    ? usuario.nombre.charAt(0).toUpperCase()    : "?";
-    var inicial2 = usuario.apellido  ? usuario.apellido.charAt(0).toUpperCase()  : "";
-    document.getElementById("avatarIniciales").textContent = inicial1 + inicial2;
+    var inicial1 = usuario.nombre ? usuario.nombre.charAt(0).toUpperCase() : "?";
+    var inicial2 = usuario.apellido ? usuario.apellido.charAt(0).toUpperCase() : "";
+    var avatar = document.getElementById("avatarIniciales");
+    if (avatar) avatar.textContent = inicial1 + inicial2;
 
 }
 
@@ -87,8 +88,8 @@ function activarEdicion() {
 
     document.getElementById("seccionDatos").classList.add("edicion-activa");
 
-    document.getElementById("btnEditar").style.display   = "none";
-    document.getElementById("btnGuardar").style.display  = "block";
+    document.getElementById("btnEditar").style.display = "none";
+    document.getElementById("btnGuardar").style.display = "block";
     document.getElementById("btnCancelar").style.display = "block";
 
 }
@@ -99,8 +100,8 @@ function cancelarEdicion() {
 
     document.getElementById("seccionDatos").classList.remove("edicion-activa");
 
-    document.getElementById("btnEditar").style.display   = "block";
-    document.getElementById("btnGuardar").style.display  = "none";
+    document.getElementById("btnEditar").style.display = "block";
+    document.getElementById("btnGuardar").style.display = "none";
     document.getElementById("btnCancelar").style.display = "none";
 
     // Restaurar valores originales en los inputs
@@ -116,13 +117,13 @@ async function guardarCambios() {
 
     limpiarErrores();
 
-    var nombre    = document.getElementById("editNombre").value.trim();
-    var apellido  = document.getElementById("editApellido").value.trim();
-    var telefono  = document.getElementById("editTelefono").value.trim();
+    var nombre = document.getElementById("editNombre").value.trim();
+    var apellido = document.getElementById("editApellido").value.trim();
+    var telefono = document.getElementById("editTelefono").value.trim();
     var direccion = document.getElementById("editDireccion").value.trim();
 
     var mensajeEl = document.getElementById("mensajePerfil");
-    var boton     = document.getElementById("btnGuardar");
+    var boton = document.getElementById("btnGuardar");
 
     // Validaciones básicas
     var valido = true;
@@ -164,7 +165,7 @@ async function guardarCambios() {
         Auth.mostrarMensaje(mensajeEl, "Datos actualizados correctamente.", "exito");
 
         // Salir del modo edición después de un momento
-        setTimeout(function() {
+        setTimeout(function () {
             cancelarEdicion();
         }, 1500);
 
@@ -183,7 +184,7 @@ function mostrarError(campoId, mensaje) {
     var input = document.getElementById("edit" + campoId.charAt(0).toUpperCase() + campoId.slice(1));
     var errorEl = document.getElementById("error" + campoId.charAt(0).toUpperCase() + campoId.slice(1));
 
-    if (input)   input.classList.add("input--error");
+    if (input) input.classList.add("input--error");
     if (errorEl) {
         errorEl.textContent = mensaje;
         errorEl.classList.add("visible");
@@ -194,11 +195,11 @@ function mostrarError(campoId, mensaje) {
 
 function limpiarErrores() {
 
-    document.querySelectorAll(".campo input").forEach(function(input) {
+    document.querySelectorAll(".campo input").forEach(function (input) {
         input.classList.remove("input--error");
     });
 
-    document.querySelectorAll(".campo__error").forEach(function(error) {
+    document.querySelectorAll(".campo__error").forEach(function (error) {
         error.textContent = "";
         error.classList.remove("visible");
     });
