@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mi Perfil - Lana & Lino</title>
-  <link rel="stylesheet" href="../css/auth.css" />
+  <link rel="stylesheet" href="../css/perfil.css" />
 </head>
 <body>
 
@@ -15,18 +15,20 @@
 
   <!-- Pantalla de carga -->
   <div id="cargandoPerfil" style="
+    position: fixed;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--color-texto-suave);
+    font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.9rem;
-    letter-spacing: 0.1em;">
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);">
     Cargando perfil...
   </div>
 
-  <!-- Contenido del perfil (oculto hasta que cargue) -->
+  <!-- Contenido del perfil -->
   <main class="perfil-pagina" id="paginaPerfil" style="display: none;">
 
     <header class="perfil-header">
@@ -34,10 +36,7 @@
       <h1 class="perfil-header__titulo">Mi Perfil</h1>
     </header>
 
-    <!-- Avatar con iniciales -->
-    <div class="perfil-avatar" id="avatarIniciales">??</div>
-
-    <!-- Sección de datos personales -->
+    <!-- Datos personales -->
     <section class="perfil-seccion" id="seccionDatos">
       <h2 class="perfil-seccion__titulo">Datos personales</h2>
 
@@ -57,7 +56,6 @@
           <span class="campo__error" id="errorApellido"></span>
         </div>
 
-        <!-- El email no se puede editar -->
         <div class="dato-lectura" style="grid-column: 1 / -1;">
           <span class="dato-lectura__etiqueta">Email</span>
           <span class="dato-lectura__valor" id="verEmail">—</span>
@@ -88,28 +86,22 @@
       </div>
     </section>
 
-    <!-- Sección de acciones de cuenta -->
+    <!-- Cuenta -->
     <section class="perfil-seccion">
       <h2 class="perfil-seccion__titulo">Cuenta</h2>
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <a href="../index.html" class="btn-secundario"
-          style="text-decoration: none; text-align: center; flex: 1; min-width: 140px; display: block; padding: 0.75rem;">
-          ← Volver al inicio
-        </a>
-        <button class="btn-cerrar-sesion" id="btnCerrarSesion" type="button" style="flex: 1; min-width: 140px;">
-          Cerrar sesión
-        </button>
+      <div class="perfil-acciones">
+        <a href="../index.html" class="btn-secundario">← Volver al inicio</a>
+        <button class="btn-cerrar-sesion" id="btnCerrarSesion" type="button">Cerrar sesión</button>
       </div>
     </section>
 
-    <!-- Solo visible para administradores -->
+    <!-- Solo admin -->
     <section class="perfil-seccion" data-rol="admin" style="display: none;">
       <h2 class="perfil-seccion__titulo">Administración</h2>
-      <p style="font-size: 0.875rem; color: var(--color-texto-suave); margin-bottom: 1rem;">
+      <p style="font-size: 0.875rem; color: var(--c-suave); margin-bottom: 1rem;">
         Tenés permisos de administrador.
       </p>
-      <a href="admin.html" class="btn-principal"
-        style="text-decoration: none; text-align: center; display: block;">
+      <a href="admin.html" class="btn-principal" style="text-decoration: none; text-align: center;">
         Gestionar productos
       </a>
     </section>
