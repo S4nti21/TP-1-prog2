@@ -48,6 +48,7 @@
     align-items:center;
   
     gap:25px;
+    
   }
   
   /* CENTER */
@@ -76,6 +77,81 @@
     gap:20px;
   }
   
+  /* HEADER ICONS */
+
+.header-right{
+    display:flex;
+  
+    justify-content:flex-end;
+  
+    align-items:center;
+  
+    gap:30px;
+  }
+  
+  /* ICON BUTTON */
+  
+  .icon-btn{
+    background:none;
+  
+    border:none;
+  
+    color:white;
+  
+    font-size:1.1rem;
+  
+    cursor:pointer;
+  
+    text-decoration:none;
+  
+    transition:0.2s;
+  }
+  
+  .icon-btn:hover{
+    opacity:0.6;
+  }
+  
+  /* CART */
+  
+  .cart-icon{
+    position:relative;
+  
+    color:white;
+  
+    font-size:1.1rem;
+  
+    text-decoration:none;
+  
+    transition:0.2s;
+  }
+  
+  .cart-icon:hover{
+    opacity:0.6;
+  }
+  
+  /* COUNTER */
+  
+  #cartCounter{
+    position:absolute;
+  
+    top:-10px;
+    right:-10px;
+  
+    width:18px;
+    height:18px;
+  
+    border-radius:50%;
+  
+    background:white;
+  
+    color:black;
+  
+    font-size:0.7rem;
+  
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
   /* BUTTONS */
   
   .header button{
