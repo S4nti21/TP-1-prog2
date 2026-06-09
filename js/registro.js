@@ -155,6 +155,8 @@ function cambiarModo() {
 
 
 function actualizarIconoModo() {
+    var icono = document.getElementById("iconoModo");
+    if (!icono) return;
     var modo = document.documentElement.getAttribute("data-modo");
-    document.getElementById("iconoModo").textContent = modo === "oscuro" ? "🌙" : "☀️";
+    icono.textContent = modo === "oscuro" ? "🌙" : "☀️";
 }

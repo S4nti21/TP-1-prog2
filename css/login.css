@@ -16,19 +16,6 @@
 .auth-form .btn-principal {
   margin-top: 8px;
 }
-
-/* Enlace opcional "¿Olvidaste tu contraseña?" */
-.link-olvidaste {
-  display: inline-block;
-  align-self: flex-end;
-  font-size: 11px;
-  color: var(--c-suave);
-  text-decoration: none;
-  letter-spacing: 0.05em;
-  margin-top: -10px;
-  border-bottom: 1px solid transparent;
-  transition: color var(--trans), border-color var(--trans);
-}
 .link-olvidaste:hover {
   color: var(--c-acento);
   border-bottom-color: var(--c-acento);
