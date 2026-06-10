@@ -1,3 +1,77 @@
+const dropdown =
+document.querySelector(
+  ".dropdown"
+);
+
+const dropdownBtn =
+document.querySelector(
+  ".dropdown-btn"
+);
+
+dropdownBtn.addEventListener(
+  "click",
+  () => {
+
+    dropdown.classList.toggle(
+      "active"
+    );
+
+  }
+);
+
+const categoryLinks =
+document.querySelectorAll(
+  ".mega-menu a"
+);
+
+categoryLinks.forEach(link => {
+
+  link.addEventListener(
+    "click",
+    e => {
+
+      e.preventDefault();
+
+      const category =
+      link.dataset.filter;
+
+      filtrarProductos(category);
+
+      /* CERRAR MENU */
+
+      dropdown.classList.remove(
+        "active"
+      );
+
+      /* SCROLL */
+
+      setTimeout(() => {
+
+        const section =
+        document.querySelector(
+        ".products-section"
+);
+
+const headerHeight = 90;
+
+const sectionPosition =
+section.offsetTop - headerHeight;
+
+window.scrollTo({
+
+  top:sectionPosition,
+
+  behavior:"smooth"
+
+});
+
+      },150);
+
+    }
+  );
+
+});
+
 let carrito =
 JSON.parse(
   localStorage.getItem("carrito")
@@ -35,61 +109,72 @@ async function obtenerProductos(){
         {
           nombre:"MEDIC CREME ZIP HOODIE",
           precio:148500,
-          categoria:"hoodies"
+          categoria:"hoodies",
+          imagen:"medic.png"
+
         },
       
         {
           nombre:"WARFARE HOODIE",
           precio:129900,
-          categoria:"hoodies"
+          categoria:"hoodies",
+          imagen:"warfare.png"
         },
       
         {
           nombre:"BLACK DENIM",
           precio:189000,
-          categoria:"pantalones"
+          categoria:"pantalones",
+          imagen:"black denim.png"
         },
       
         {
           nombre:"STREET JACKET",
           precio:220000,
-          categoria:"camperas"
+          categoria:"camperas",
+          imagen:"street jacket.png"
         },
       
         {
           nombre:"ESSENTIAL TEE",
           precio:78000,
-          categoria:"remeras"
+          categoria:"remeras",
+          imagen:"essentialtee.png"
         },
       
         {
           nombre:"OVERSIZED TEE",
           precio:82000,
-          categoria:"remeras"
+          categoria:"remeras",
+          imagen:"oversizedtee.png"
         },
       
         {
           nombre:"UTILITY PANTS",
           precio:175000,
-          categoria:"pantalones"
+          categoria:"pantalones",
+          imagen:"utilitypants.png"
         },
       
         {
           nombre:"TACTICAL HOODIE",
           precio:158000,
-          categoria:"hoodies"
+          categoria:"hoodies",
+          imagen:"tacticalhoodie.png"
         },
       
         {
           nombre:"CARGO PANTS",
           precio:195000,
-          categoria:"pantalones"
+          categoria:"pantalones",
+          imagen:"cargopants.png"
         },
       
         {
           nombre:"MINIMAL JACKET",
           precio:248000,
-          categoria:"camperas"
+          categoria:"camperas",
+          imagen:"minimaljacket.png"
         }
       
       ]);
@@ -130,47 +215,40 @@ function renderProducts(products){
   products.forEach(product => {
 
     container.innerHTML += `
-
-      <div
-      class="product-card"
-      data-category="${product.categoria}"
+    <div class="product-card" data-category="${product.categoria}">
+    
+    <div class="product-image-wrap">
+      <span class="product-badge" style="display:none">BACK IN STOCK</span>
+      <img
+      src="../assets/${product.imagen}"
+      alt="${product.nombre}"
       >
+      <button class="bookmark-btn">
+        <i class="fa-regular fa-bookmark"></i>
+      </button>
+    </div>
 
-        <div class="product-info">
+    <div class="product-info">
+      <div class="product-info-top">
 
-          <div>
+      <p class="product-name">
+        ${product.nombre}
+      </p>
 
-            <p class="product-category">
-            ${product.categoria.toUpperCase()}
-            </p>
+      <p class="product-price">
+       $${Number(product.precio).toLocaleString("es-AR")}
+      </p>
 
-            <h3>
-              ${product.nombre}
-            </h3>
-
-          </div>
-
-          <div>
-
-            <p class="product-price">
-              $${product.precio}
-            </p>
-
-            <button
-              class="add-cart-btn"
-              data-name="${product.nombre}"
-              data-price="${product.precio}"
-            >
-              AGREGAR AL CARRITO
-            </button>
-
-          </div>
-
-        </div>
-
+    </div>
+        
       </div>
+      <button class="add-cart-btn" data-name="${product.nombre}" data-price="${product.precio}">
+        AGREGAR AL CARRITO
+      </button>
+    </div>
 
-    `;
+  </div>
+  `;
 
   });
 
@@ -333,9 +411,7 @@ function filtrarProductos(categoria){
 
   cards.forEach(card => {
 
-    if(
-      categoria === "all"
-    ){
+    if(categoria === "all"){
 
       card.style.display =
       "flex";
@@ -358,6 +434,17 @@ function filtrarProductos(categoria){
       "none";
 
     }
+
+  });
+
+  /* SCROLL */
+
+  document.querySelector(
+    ".products-section"
+  ).scrollIntoView({
+
+    behavior:"smooth",
+    block:"start"
 
   });
 
