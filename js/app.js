@@ -1,4 +1,7 @@
-let carrito = [];
+let carrito =
+JSON.parse(
+  localStorage.getItem("carrito")
+) || [];
 
 /* CONTAINER */
 
@@ -28,22 +31,67 @@ async function obtenerProductos(){
     if(data.payload.length === 0){
 
       renderProducts([
+
         {
           nombre:"MEDIC CREME ZIP HOODIE",
-          precio:148500
+          precio:148500,
+          categoria:"hoodies"
         },
+      
         {
           nombre:"WARFARE HOODIE",
-          precio:129900
+          precio:129900,
+          categoria:"hoodies"
         },
+      
         {
           nombre:"BLACK DENIM",
-          precio:189000
+          precio:189000,
+          categoria:"pantalones"
         },
+      
         {
           nombre:"STREET JACKET",
-          precio:220000
+          precio:220000,
+          categoria:"camperas"
+        },
+      
+        {
+          nombre:"ESSENTIAL TEE",
+          precio:78000,
+          categoria:"remeras"
+        },
+      
+        {
+          nombre:"OVERSIZED TEE",
+          precio:82000,
+          categoria:"remeras"
+        },
+      
+        {
+          nombre:"UTILITY PANTS",
+          precio:175000,
+          categoria:"pantalones"
+        },
+      
+        {
+          nombre:"TACTICAL HOODIE",
+          precio:158000,
+          categoria:"hoodies"
+        },
+      
+        {
+          nombre:"CARGO PANTS",
+          precio:195000,
+          categoria:"pantalones"
+        },
+      
+        {
+          nombre:"MINIMAL JACKET",
+          precio:248000,
+          categoria:"camperas"
         }
+      
       ]);
 
     }else{
@@ -83,14 +131,17 @@ function renderProducts(products){
 
     container.innerHTML += `
 
-      <div class="product-card">
+      <div
+      class="product-card"
+      data-category="${product.categoria}"
+      >
 
         <div class="product-info">
 
           <div>
 
             <p class="product-category">
-              STREETWEAR
+            ${product.categoria.toUpperCase()}
             </p>
 
             <h3>
@@ -201,12 +252,30 @@ function agregarAlCarrito(e){
 
   const producto = {
 
+    id: Date.now(),
+  
     nombre,
-    precio
-
+  
+    precio:Number(precio),
+  
+    categoria:"Streetwear",
+  
+    talle:"M",
+  
+    color:"Negro",
+  
+    cantidad:1,
+  
+    imagen:"../assets/product.jpg"
+  
   };
 
   carrito.push(producto);
+
+  localStorage.setItem(
+    "carrito",
+    JSON.stringify(carrito)
+  );
 
   console.log(carrito);
 
@@ -228,6 +297,74 @@ function actualizarContador(){
 
 }
 
+/* FILTROS */
+
+const filtros =
+document.querySelectorAll(
+  "[data-filter]"
+);
+
+filtros.forEach(filtro => {
+
+  filtro.addEventListener(
+    "click",
+    (e) => {
+
+      e.preventDefault();
+
+      const categoria =
+      filtro.dataset.filter;
+
+      filtrarProductos(
+        categoria
+      );
+
+    }
+  );
+
+});
+
+function filtrarProductos(categoria){
+
+  const cards =
+  document.querySelectorAll(
+    ".product-card"
+  );
+
+  cards.forEach(card => {
+
+    if(
+      categoria === "all"
+    ){
+
+      card.style.display =
+      "flex";
+
+      return;
+
+    }
+
+    if(
+      card.dataset.category ===
+      categoria
+    ){
+
+      card.style.display =
+      "flex";
+
+    }else{
+
+      card.style.display =
+      "none";
+
+    }
+
+  });
+
+}
+
 /* INIT */
 
 obtenerProductos();
+
+actualizarContador();

@@ -46,31 +46,12 @@ themeButton.addEventListener("click", () => {
 actualizarIconoTema();
 
 
-let carrito = [
+/* LOCAL STORAGE */
 
-    {
-        id: 1,
-        nombre: "REMERA OVERSIZE",
-        categoria: "Streetwear",
-        talle: "M",
-        color: "Negro",
-        cantidad: 1,
-        precio: 25000,
-        imagen: "../img/remera.jpg"
-    },
-
-    {
-        id: 2,
-        nombre: "BUZO ESSENTIAL",
-        categoria: "Oversize",
-        talle: "L",
-        color: "Beige",
-        cantidad: 1,
-        precio: 40000,
-        imagen: "../img/buzo.jpg"
-    }
-
-];
+let carrito =
+JSON.parse(
+    localStorage.getItem("carrito")
+) || [];
 
 const cartProducts =
     document.getElementById("cartProducts");
@@ -213,6 +194,23 @@ function eliminarProducto(idProducto){
             return producto.id !== idProducto;
 
         });
+
+    /* ACTUALIZAR STORAGE */
+
+    localStorage.setItem(
+        "carrito",
+        JSON.stringify(carrito)
+    );
+
+    /* SI ESTÁ VACÍO */
+
+    if(carrito.length === 0){
+
+        localStorage.removeItem(
+            "carrito"
+        );
+
+    }
 
     renderizarCarrito();
 
