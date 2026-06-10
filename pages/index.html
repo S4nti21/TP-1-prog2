@@ -29,6 +29,10 @@
     rel="stylesheet"
   >
 
+  <!-- ICONOS -->
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 
 <body>
@@ -44,7 +48,7 @@
       <div class="dropdown">
   
         <button class="dropdown-btn">
-          TIENDA
+          TIENDA ▼
         </button>
   
         <!-- MEGA MENU -->
@@ -53,48 +57,43 @@
   
           <div class="mega-column">
   
-            <h2>Best Sellers</h2>
-  
-            <a href="#">Anniversary Sales</a>
-            <a href="#">Novedades</a>
-            <a href="#">Back in Stock</a>
-            <a href="#">Mujer</a>
+            <a href="#" data-filter="all">
+              Ver Todo
+            </a>
   
           </div>
   
           <div class="mega-column">
   
-            <h2>Hombre</h2>
-  
-            <a href="#">Best Sellers</a>
-            <a href="#">Novedades</a>
-            <a href="#">Ver Todo</a>
-            <a href="#">Remeras</a>
-            <a href="#">Pantalones</a>
-            <a href="#">Hoodies</a>
+            <a href="#" data-filter="hoodies">
+              Hoodies
+            </a>
   
           </div>
   
           <div class="mega-column">
   
-            <h2>Mujer</h2>
-  
-            <a href="#">Best Sellers</a>
-            <a href="#">Novedades</a>
-            <a href="#">Chaquetas</a>
-            <a href="#">Sudaderas</a>
-            <a href="#">Faldas</a>
+            <a href="#" data-filter="remeras">
+              Remeras
+            </a>
   
           </div>
   
           <div class="mega-column">
   
-            <h2>Accesorios</h2>
+            <a href="#" data-filter="pantalones">
+              Pantalones
+            </a>
+            
   
-            <a href="#">Ver Todo</a>
-            <a href="#">Gorras</a>
-            <a href="#">Bolsos</a>
-            <a href="#">Calzado</a>
+          </div>
+
+          <div class="mega-column">
+  
+            <a href="#" data-filter="camperas">
+              Camperas
+            </a>
+            
   
           </div>
   
@@ -102,34 +101,66 @@
   
       </div>
   
-      <input
-        type="text"
-        placeholder="Buscar productos..."
-      >
+
   
     </div>
   
     <!-- CENTER -->
   
-    <div class="logo">
-  
-      LANA & LINO
-  
-    </div>
+    <a href="./index.html" class="logo">
+        LANA & LINO
+      </a>
   
     <!-- RIGHT -->
   
     <div class="header-right">
-  
-      <button>FAVORITOS</button>
-  
-      <button>LOGIN</button>
-  
-      <button>PERFIL</button>
-  
-      <button>CARRITO</button>
-  
-    </div>
+
+        <!-- BUSCAR -->
+      
+        <button class="icon-btn">
+      
+          <i class="fa-solid fa-magnifying-glass"></i>
+      
+        </button>
+      
+        <!-- PERFIL -->
+      
+        <a
+          href="./perfil.html"
+          class="icon-btn"
+        >
+      
+          <i class="fa-regular fa-user"></i>
+      
+        </a>
+      
+        <!-- LOGIN -->
+      
+        <a
+          href="./login.html"
+          class="icon-btn"
+        >
+      
+          <i class="fa-solid fa-right-to-bracket"></i>
+      
+        </a>
+      
+        <!-- CARRITO -->
+      
+        <a
+          href="./carrito.html"
+          class="cart-icon"
+        >
+      
+          <i class="fa-solid fa-bag-shopping"></i>
+      
+          <span id="cartCounter">
+            0
+          </span>
+      
+        </a>
+      
+      </div>
   
   </header>
 
@@ -137,22 +168,11 @@
 
   <section class="hero">
 
-    <!-- VIDEO BACKGROUND -->
-
-    <video
-      autoplay
-      muted
-      loop
-      playsinline
-      class="hero-video"
-    >
-
-      <source
-        src="../assets/background.mp4"
-        type="video/mp4"
-      >
-
-    </video>
+    <img
+    src="../assets/highxtar-esta-el-streetwear-pasado-de-moda-1.png"
+    alt="Background"
+    class="hero-image"
+  />
 
     <!-- CONTENT -->
 
@@ -163,7 +183,7 @@
       </h1>
 
       <p>
-        Lo que necesitas vestir
+        Lo que necesitás vestir
       </p>
 
     </div>
