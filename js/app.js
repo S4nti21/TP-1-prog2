@@ -1,3 +1,5 @@
+let carrito = [];
+
 /* CONTAINER */
 
 const container =
@@ -13,18 +15,57 @@ async function obtenerProductos(){
 
     const response =
     await fetch(
-      "http://localhost:4000/obtenerProductos"
+      "http://localhost:4000/api/obtenerProductos"
     );
 
-    const products =
+    const data =
     await response.json();
 
-    renderProducts(products);
+    console.log(data);
+
+    /* SI NO HAY PRODUCTOS EN DB */
+
+    if(data.payload.length === 0){
+
+      renderProducts([
+        {
+          nombre:"MEDIC CREME ZIP HOODIE",
+          precio:148500
+        },
+        {
+          nombre:"WARFARE HOODIE",
+          precio:129900
+        },
+        {
+          nombre:"BLACK DENIM",
+          precio:189000
+        },
+        {
+          nombre:"STREET JACKET",
+          precio:220000
+        }
+      ]);
+
+    }else{
+
+      /* ADAPTAR BACKEND */
+
+      const productosBackend =
+      data.payload.map(product => ({
+
+        nombre: product.producto,
+        precio: product.precio
+
+      }));
+
+      renderProducts(productosBackend);
+
+    }
 
   }catch(error){
 
     console.log(
-      "Error obteniendo productos:",
+      "ERROR:",
       error
     );
 
@@ -49,7 +90,7 @@ function renderProducts(products){
           <div>
 
             <p class="product-category">
-              ${product.categoria || "STREETWEAR"}
+              STREETWEAR
             </p>
 
             <h3>
@@ -64,7 +105,11 @@ function renderProducts(products){
               $${product.precio}
             </p>
 
-            <button>
+            <button
+              class="add-cart-btn"
+              data-name="${product.nombre}"
+              data-price="${product.precio}"
+            >
               AGREGAR AL CARRITO
             </button>
 
@@ -78,7 +123,13 @@ function renderProducts(products){
 
   });
 
+  /* ACTIVAR ANIMACIONES */
+
   activarAnimaciones();
+
+  /* ACTIVAR BOTONES */
+
+  activarBotonesCarrito();
 
 }
 
@@ -115,6 +166,65 @@ function activarAnimaciones(){
     observer.observe(card);
 
   });
+
+}
+
+/* BOTONES CARRITO */
+
+function activarBotonesCarrito(){
+
+  const botones =
+  document.querySelectorAll(
+    ".add-cart-btn"
+  );
+
+  botones.forEach(btn => {
+
+    btn.addEventListener(
+      "click",
+      agregarAlCarrito
+    );
+
+  });
+
+}
+
+/* AGREGAR AL CARRITO */
+
+function agregarAlCarrito(e){
+
+  const nombre =
+  e.target.dataset.name;
+
+  const precio =
+  e.target.dataset.price;
+
+  const producto = {
+
+    nombre,
+    precio
+
+  };
+
+  carrito.push(producto);
+
+  console.log(carrito);
+
+  actualizarContador();
+
+}
+
+/* CONTADOR */
+
+function actualizarContador(){
+
+  const counter =
+  document.getElementById(
+    "cartCounter"
+  );
+
+  counter.textContent =
+  carrito.length;
 
 }
 
