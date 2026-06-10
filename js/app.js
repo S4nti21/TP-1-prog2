@@ -77,12 +77,157 @@ JSON.parse(
   localStorage.getItem("carrito")
 ) || [];
 
+let todosLosProductos = [];
+
 /* CONTAINER */
 
 const container =
 document.getElementById(
   "productsContainer"
 );
+
+const searchBtn =
+document.getElementById("searchBtn");
+
+const searchInput =
+document.getElementById("searchInput");
+
+if(searchBtn && searchInput){
+
+  searchBtn.addEventListener(
+    "click",
+    () => {
+
+      searchInput.classList.toggle(
+        "active"
+      );
+
+      if(
+        searchInput.classList.contains(
+          "active"
+        )
+      ){
+
+        searchInput.focus();
+
+      }
+
+    }
+  );
+
+}
+
+function buscarProductos(){
+
+  const texto =
+  searchInput.value
+  .toLowerCase()
+  .trim();
+
+  /* SI EL INPUT ESTA VACIO */
+
+  if(texto === ""){
+
+    renderProducts(
+      todosLosProductos
+    );
+
+    return;
+
+  }
+
+  const resultados =
+  todosLosProductos.filter(product =>
+
+    product.nombre
+    .toLowerCase()
+    .includes(texto)
+
+  );
+
+  /* SI NO HAY RESULTADOS */
+
+  if(resultados.length === 0){
+
+    container.innerHTML = `
+      <div class="no-results">
+        No se encontraron productos.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  /* MOSTRAR RESULTADOS */
+
+  renderProducts(resultados);
+
+  /* SCROLL A PRODUCTOS */
+
+  const section =
+  document.querySelector(
+    ".products-section"
+  );
+
+  const headerHeight =
+  document.querySelector(
+    ".header"
+  ).offsetHeight;
+
+  window.scrollTo({
+
+    top:
+    section.offsetTop -
+    headerHeight,
+
+    behavior:"smooth"
+
+  });
+
+}
+
+if(searchBtn && searchInput){
+
+  searchInput.addEventListener(
+    "keydown",
+    e => {
+
+      if(e.key === "Enter"){
+
+        buscarProductos();
+
+      }
+
+    }
+  );
+
+  searchBtn.addEventListener(
+    "click",
+    () => {
+
+      if(
+        !searchInput.classList.contains(
+          "active"
+        )
+      ){
+
+        searchInput.classList.add(
+          "active"
+        );
+
+        searchInput.focus();
+
+        return;
+
+      }
+
+      buscarProductos();
+
+    }
+  );
+
+}
 
 /* OBTENER PRODUCTOS */
 
@@ -104,7 +249,7 @@ async function obtenerProductos(){
 
     if(data.payload.length === 0){
 
-      renderProducts([
+      todosLosProductos = [
 
         {
           nombre:"MEDIC CREME ZIP HOODIE",
@@ -177,7 +322,9 @@ async function obtenerProductos(){
           imagen:"minimaljacket.png"
         }
       
-      ]);
+      ];
+
+      renderProducts(todosLosProductos);
 
     }else{
 
@@ -191,7 +338,9 @@ async function obtenerProductos(){
 
       }));
 
-      renderProducts(productosBackend);
+      todosLosProductos = productosBackend;
+
+      renderProducts(todosLosProductos);
 
     }
 
@@ -242,7 +391,11 @@ function renderProducts(products){
     </div>
         
       </div>
-      <button class="add-cart-btn" data-name="${product.nombre}" data-price="${product.precio}">
+      <button
+      class="add-cart-btn"
+      data-name="${product.nombre}"
+      data-price="${product.precio}"
+      data-image="${product.imagen}">
         AGREGAR AL CARRITO
       </button>
     </div>
@@ -328,24 +481,27 @@ function agregarAlCarrito(e){
   const precio =
   e.target.dataset.price;
 
+  const imagen =
+  e.target.dataset.image;
+
   const producto = {
 
     id: Date.now(),
-  
+
     nombre,
-  
+
     precio:Number(precio),
-  
+
     categoria:"Streetwear",
-  
+
     talle:"M",
-  
+
     color:"Negro",
-  
+
     cantidad:1,
-  
-    imagen:"../assets/product.jpg"
-  
+
+    imagen:`../assets/${imagen}`
+
   };
 
   carrito.push(producto);
@@ -354,8 +510,6 @@ function agregarAlCarrito(e){
     "carrito",
     JSON.stringify(carrito)
   );
-
-  console.log(carrito);
 
   actualizarContador();
 
@@ -455,3 +609,92 @@ function filtrarProductos(categoria){
 obtenerProductos();
 
 actualizarContador();
+
+const header =
+document.querySelector(".header");
+
+const productsSection =
+document.querySelector(".products-section");
+
+window.addEventListener(
+  "scroll",
+  () => {
+
+    const sectionTop =
+    productsSection.getBoundingClientRect().top;
+
+    const headerHeight =
+    header.offsetHeight;
+
+    if(sectionTop <= headerHeight){
+
+      header.classList.add(
+        "scrolled"
+      );
+
+    }else{
+
+      header.classList.remove(
+        "scrolled"
+      );
+
+    }
+
+  }
+);
+
+window.addEventListener(
+  "load",
+  () => {
+
+    setTimeout(() => {
+
+      document
+      .getElementById(
+        "preloader"
+      )
+      .classList.add(
+        "hide"
+      );
+
+    },1500);
+
+  }
+);
+
+const slider =
+document.getElementById("heroSlider");
+
+const slides =
+document.querySelectorAll(".hero-slide");
+
+let index = 0;
+
+setInterval(() => {
+
+  index++;
+
+  slider.style.transition =
+  "transform 1s ease";
+
+  slider.style.transform =
+  `translateX(-${index * 100}vw)`;
+
+  // Llegó al clon
+  if(index === slides.length - 1){
+
+    setTimeout(() => {
+
+      slider.style.transition =
+      "none";
+
+      index = 0;
+
+      slider.style.transform =
+      "translateX(0)";
+
+    },1000);
+
+  }
+
+},3000);
