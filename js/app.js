@@ -1,3 +1,8 @@
+let favoritos =
+JSON.parse(
+  localStorage.getItem("favoritos")
+) || [];
+
 const dropdown =
 document.querySelector(
   ".dropdown"
@@ -363,57 +368,210 @@ function renderProducts(products){
 
   products.forEach(product => {
 
+    const esFavorito =
+    favoritos.some(
+      producto =>
+      producto.nombre === product.nombre
+    );
+  
     container.innerHTML += `
-    <div class="product-card" data-category="${product.categoria}">
-    
-    <div class="product-image-wrap">
-      <span class="product-badge" style="display:none">BACK IN STOCK</span>
-      <img
-      src="../assets/${product.imagen}"
-      alt="${product.nombre}"
-      >
-      <button class="bookmark-btn">
-        <i class="fa-regular fa-bookmark"></i>
-      </button>
-    </div>
-
-    <div class="product-info">
-      <div class="product-info-top">
-
-      <p class="product-name">
-        ${product.nombre}
-      </p>
-
-      <p class="product-price">
-       $${Number(product.precio).toLocaleString("es-AR")}
-      </p>
-
-    </div>
-        
+      <div class="product-card" data-category="${product.categoria}">
+      
+        <div class="product-image-wrap">
+  
+          <span class="product-badge" style="display:none">
+            BACK IN STOCK
+          </span>
+  
+          <img
+            src="../assets/${product.imagen}"
+            alt="${product.nombre}"
+          >
+  
+          <button
+            class="bookmark-btn"
+            data-name="${product.nombre}"
+            data-price="${product.precio}"
+            data-image="${product.imagen}"
+          >
+  
+            <i class="${
+              esFavorito
+              ? "fa-solid fa-bookmark"
+              : "fa-regular fa-bookmark"
+            }"></i>
+  
+          </button>
+  
+        </div>
+  
+        <div class="product-info">
+  
+          <div class="product-info-top">
+  
+            <p class="product-name">
+              ${product.nombre}
+            </p>
+  
+            <p class="product-price">
+              $${Number(product.precio).toLocaleString("es-AR")}
+            </p>
+  
+          </div>
+  
+        </div>
+  
+        <button
+          class="add-cart-btn"
+          data-name="${product.nombre}"
+          data-price="${product.precio}"
+          data-image="${product.imagen}"
+        >
+          AGREGAR AL CARRITO
+        </button>
+  
       </div>
-      <button
-      class="add-cart-btn"
-      data-name="${product.nombre}"
-      data-price="${product.precio}"
-      data-image="${product.imagen}">
-        AGREGAR AL CARRITO
-      </button>
-    </div>
-
-  </div>
-  `;
-
+    `;
+  
   });
-
-  /* ACTIVAR ANIMACIONES */
 
   activarAnimaciones();
 
-  /* ACTIVAR BOTONES */
-
   activarBotonesCarrito();
 
+  activarBotonesFavoritos();
+
+  }
+
+  function activarBotonesFavoritos(){
+
+    const botones =
+    document.querySelectorAll(
+      ".bookmark-btn"
+    );
+  
+    botones.forEach(btn => {
+  
+      btn.addEventListener(
+        "click",
+        agregarAFavoritos
+      );
+  
+    });
+  }
+
+  function mostrarToast(mensaje){
+
+    const toast =
+    document.getElementById("toast");
+
+    toast.textContent =
+    mensaje;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove(
+            "show"
+        );
+
+    },2500);
+
 }
+
+function agregarAFavoritos(e){
+
+  const boton =
+  e.currentTarget;
+
+  const nombre =
+  boton.dataset.name;
+
+  const precio =
+  boton.dataset.price;
+
+  const imagen =
+  boton.dataset.image;
+
+  const existe =
+  favoritos.find(
+      producto =>
+      producto.nombre === nombre
+  );
+
+  if(existe){
+
+      favoritos =
+      favoritos.filter(
+          producto =>
+          producto.nombre !== nombre
+      );
+
+      boton.innerHTML =
+      '<i class="fa-regular fa-bookmark"></i>';
+
+      mostrarToast(
+          `${nombre} eliminado de favoritos`
+      );
+
+  }else{
+
+      favoritos.push({
+
+          id: Date.now(),
+
+          nombre,
+          precio,
+          imagen
+
+      });
+
+      boton.innerHTML =
+      '<i class="fa-solid fa-bookmark"></i>';
+
+      mostrarToast(
+          `${nombre} agregado a favoritos`
+      );
+
+  }
+
+  localStorage.setItem(
+
+      "favoritos",
+
+      JSON.stringify(
+          favoritos
+      )
+
+  );
+
+  actualizarFavoritos();
+
+}
+
+  function actualizarFavoritos(){
+
+    const favoritos =
+    JSON.parse(
+      localStorage.getItem("favoritos")
+    ) || [];
+  
+    const contador =
+    document.getElementById(
+      "favoritesCounter"
+    );
+  
+    if(contador){
+  
+      contador.textContent =
+      favoritos.length;
+  
+    }
+  
+  }
+
+  actualizarFavoritos();
 
 /* SCROLL ANIMATION */
 
@@ -604,12 +762,6 @@ function filtrarProductos(categoria){
 
 }
 
-/* INIT */
-
-obtenerProductos();
-
-actualizarContador();
-
 const header =
 document.querySelector(".header");
 
@@ -698,3 +850,13 @@ setInterval(() => {
   }
 
 },3000);
+
+/* INIT */
+
+obtenerProductos();
+
+actualizarContador();
+
+  /* ACTIVAR ANIMACIONES */
+
+  actualizarFavoritos();
