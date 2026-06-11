@@ -1,3 +1,8 @@
+let favoritos =
+JSON.parse(
+  localStorage.getItem("favoritos")
+) || [];
+
 const dropdown =
 document.querySelector(
   ".dropdown"
@@ -252,74 +257,83 @@ async function obtenerProductos(){
       todosLosProductos = [
 
         {
+          id:1,
           nombre:"MEDIC CREME ZIP HOODIE",
           precio:148500,
           categoria:"hoodies",
-          imagen:"medic.png"
-
+          imagen:"medic.png",
         },
       
         {
+          id:2,
           nombre:"WARFARE HOODIE",
           precio:129900,
           categoria:"hoodies",
-          imagen:"warfare.png"
+          imagen:"warfare.png",
         },
       
         {
+          id:3,
           nombre:"BLACK DENIM",
           precio:189000,
           categoria:"pantalones",
-          imagen:"black denim.png"
+          imagen:"black denim.png",
         },
       
         {
+          id:4,
           nombre:"STREET JACKET",
           precio:220000,
           categoria:"camperas",
-          imagen:"street jacket.png"
+          imagen:"street jacket.png",
         },
       
         {
+          id:5,
           nombre:"ESSENTIAL TEE",
           precio:78000,
           categoria:"remeras",
-          imagen:"essentialtee.png"
+          imagen:"essentialtee.png",
         },
       
         {
+          id:6,
           nombre:"OVERSIZED TEE",
           precio:82000,
           categoria:"remeras",
-          imagen:"oversizedtee.png"
+          imagen:"oversizedtee.png",
         },
       
         {
+          id:7,
           nombre:"UTILITY PANTS",
           precio:175000,
           categoria:"pantalones",
-          imagen:"utilitypants.png"
+          imagen:"utilitypants.png",
         },
       
         {
+          id:8,
           nombre:"TACTICAL HOODIE",
           precio:158000,
           categoria:"hoodies",
-          imagen:"tacticalhoodie.png"
+          imagen:"tacticalhoodie.png",
         },
       
         {
+          id:9,
           nombre:"CARGO PANTS",
           precio:195000,
           categoria:"pantalones",
-          imagen:"cargopants.png"
+          imagen:"cargopants.png",
         },
       
         {
+          id:10,
           nombre:"MINIMAL JACKET",
           precio:248000,
           categoria:"camperas",
-          imagen:"minimaljacket.png"
+          imagen:"minimaljacket.png",
         }
       
       ];
@@ -363,57 +377,247 @@ function renderProducts(products){
 
   products.forEach(product => {
 
+    const esFavorito =
+    favoritos.some(
+      producto =>
+      producto.nombre === product.nombre
+    );
+  
     container.innerHTML += `
-    <div class="product-card" data-category="${product.categoria}">
-    
-    <div class="product-image-wrap">
-      <span class="product-badge" style="display:none">BACK IN STOCK</span>
-      <img
-      src="../assets/${product.imagen}"
-      alt="${product.nombre}"
-      >
-      <button class="bookmark-btn">
-        <i class="fa-regular fa-bookmark"></i>
-      </button>
-    </div>
-
-    <div class="product-info">
-      <div class="product-info-top">
-
-      <p class="product-name">
-        ${product.nombre}
-      </p>
-
-      <p class="product-price">
-       $${Number(product.precio).toLocaleString("es-AR")}
-      </p>
-
-    </div>
-        
+      <div 
+        class="product-card"
+        data-id="${product.id}"
+        data-category="${product.categoria}">
+      
+        <div class="product-image-wrap">
+  
+          <span class="product-badge" style="display:none">
+            BACK IN STOCK
+          </span>
+  
+          <img
+            src="../assets/${product.imagen}"
+            alt="${product.nombre}"
+          >
+  
+          <button
+            class="bookmark-btn"
+            data-name="${product.nombre}"
+            data-price="${product.precio}"
+            data-image="${product.imagen}"
+          >
+  
+            <i class="${
+              esFavorito
+              ? "fa-solid fa-bookmark"
+              : "fa-regular fa-bookmark"
+            }"></i>
+  
+          </button>
+  
+        </div>
+  
+        <div class="product-info">
+  
+          <div class="product-info-top">
+  
+            <p class="product-name">
+              ${product.nombre}
+            </p>
+  
+            <p class="product-price">
+              $${Number(product.precio).toLocaleString("es-AR")}
+            </p>
+  
+          </div>
+  
+        </div>
+  
+        <button
+          class="add-cart-btn"
+          data-name="${product.nombre}"
+          data-price="${product.precio}"
+          data-image="${product.imagen}"
+        >
+          AGREGAR AL CARRITO
+        </button>
+  
       </div>
-      <button
-      class="add-cart-btn"
-      data-name="${product.nombre}"
-      data-price="${product.precio}"
-      data-image="${product.imagen}">
-        AGREGAR AL CARRITO
-      </button>
-    </div>
-
-  </div>
-  `;
-
+    `;
+  
   });
-
-  /* ACTIVAR ANIMACIONES */
 
   activarAnimaciones();
 
-  /* ACTIVAR BOTONES */
-
   activarBotonesCarrito();
 
+  activarBotonesFavoritos();
+
+  activarClickProducto();
+
+  }
+
+  function activarClickProducto(){
+
+    const cards =
+    document.querySelectorAll(
+      ".product-card"
+    );
+  
+    cards.forEach(card => {
+  
+      card.addEventListener(
+        "click",
+        () => {
+  
+          const id =
+          card.dataset.id;
+  
+          window.location.href =
+          `producto.html?id=${id}`;
+  
+        }
+      );
+  
+    });
+  
+  }
+
+  function activarBotonesFavoritos(){
+
+    const botones =
+    document.querySelectorAll(
+      ".bookmark-btn"
+    );
+  
+    botones.forEach(btn => {
+  
+      btn.addEventListener(
+        "click",
+        agregarAFavoritos
+      );
+  
+    });
+  }
+
+  function mostrarToast(mensaje){
+
+    const toast =
+    document.getElementById("toast");
+
+    toast.textContent =
+    mensaje;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove(
+            "show"
+        );
+
+    },2500);
+
 }
+
+function agregarAFavoritos(e){
+
+  e.stopPropagation();
+
+  const boton =
+  e.currentTarget;
+
+  const nombre =
+  boton.dataset.name;
+
+  const precio =
+  boton.dataset.price;
+
+  const imagen =
+  boton.dataset.image;
+
+  const url =
+  boton.dataset.url;
+
+  const existe =
+  favoritos.find(
+      producto =>
+      producto.nombre === nombre
+  );
+
+  if(existe){
+
+      favoritos =
+      favoritos.filter(
+          producto =>
+          producto.nombre !== nombre
+      );
+
+      boton.innerHTML =
+      '<i class="fa-regular fa-bookmark"></i>';
+
+      mostrarToast(
+          `${nombre} eliminado de favoritos`
+      );
+
+  }else{
+
+      favoritos.push({
+
+          id: Date.now(),
+
+          nombre,
+          precio,
+          imagen,
+          url
+
+      });
+
+      boton.innerHTML =
+      '<i class="fa-solid fa-bookmark"></i>';
+
+      mostrarToast(
+          `${nombre} agregado a favoritos`
+      );
+
+  }
+
+  localStorage.setItem(
+
+      "favoritos",
+
+      JSON.stringify(
+          favoritos
+      )
+
+  );
+
+  actualizarFavoritos();
+
+}
+
+  function actualizarFavoritos(){
+
+    const favoritos =
+    JSON.parse(
+      localStorage.getItem("favoritos")
+    ) || [];
+  
+    const contador =
+    document.getElementById(
+      "favoritesCounter"
+    );
+  
+    if(contador){
+  
+      contador.textContent =
+      favoritos.length;
+  
+    }
+  
+  }
+
+  actualizarFavoritos();
 
 /* SCROLL ANIMATION */
 
@@ -474,6 +678,8 @@ function activarBotonesCarrito(){
 /* AGREGAR AL CARRITO */
 
 function agregarAlCarrito(e){
+
+  e.stopPropagation();
 
   const nombre =
   e.target.dataset.name;
@@ -604,12 +810,6 @@ function filtrarProductos(categoria){
 
 }
 
-/* INIT */
-
-obtenerProductos();
-
-actualizarContador();
-
 const header =
 document.querySelector(".header");
 
@@ -698,3 +898,38 @@ setInterval(() => {
   }
 
 },3000);
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const profileBtn =
+  document.getElementById(
+      "profileBtn"
+  );
+
+  if(!profileBtn) return;
+
+  const haySesion =
+  Auth.verificarSesion(false);
+
+  profileBtn.style.display =
+  haySesion
+  ? "inline-flex"
+  : "none";
+
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  Auth.aplicarPermisosPorRol();
+
+});
+
+/* INIT */
+
+obtenerProductos();
+
+actualizarContador();
+
+  /* ACTIVAR ANIMACIONES */
+
+  actualizarFavoritos();
