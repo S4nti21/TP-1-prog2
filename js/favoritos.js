@@ -49,40 +49,33 @@ function renderizarFavoritos(){
 
         container.innerHTML += `
 
-<div class="product-card">
-
-    <div class="product-image-wrap">
-
-        <img
-            src="../assets/${producto.imagen}"
-            alt="${producto.nombre}"
+        <div
+        class="product-card favorite-card"
+        data-id="${producto.id}"
         >
 
-    </div>
+        <img
+        src="../assets/${producto.imagen}"
+        alt="${producto.nombre}"
+        >
 
-    <div class="favorite-info">
+        <h3>${producto.nombre}</h3>
 
-        <p class="favorite-name">
-            ${producto.nombre}
-        </p>
-
-        <p class="favorite-price">
-            $${Number(producto.precio)
-            .toLocaleString("es-AR")}
+        <p>
+        $${Number(producto.precio)
+        .toLocaleString("es-AR")}
         </p>
 
         <button
-            class="remove-btn"
-            data-id="${producto.id}"
+        class="remove-btn"
+        data-id="${producto.id}"
         >
-            QUITAR DE FAVORITOS
+        Quitar
         </button>
 
-    </div>
+        </div>
 
-</div>
-
-`;
+        `;
     });
 
     activarBotonesEliminar();
@@ -100,23 +93,49 @@ function activarBotonesEliminar(){
 
         btn.addEventListener(
             "click",
-            () => {
-
+            (e) => {
+        
+                e.stopPropagation();
+        
                 const id =
                 Number(btn.dataset.id);
-
+        
                 favoritos =
                 favoritos.filter(
                     producto =>
                     producto.id !== id
                 );
-
+        
                 localStorage.setItem(
                     "favoritos",
                     JSON.stringify(favoritos)
                 );
-
+        
                 renderizarFavoritos();
+        
+            }
+        );
+
+    });
+
+}
+activarCardsFavoritas();
+
+function activarCardsFavoritas(){
+
+    const cards =
+    document.querySelectorAll(
+        ".favorite-card"
+    );
+
+    cards.forEach(card => {
+
+        card.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                `producto.html?id=${card.dataset.id}`;
 
             }
         );

@@ -257,74 +257,83 @@ async function obtenerProductos(){
       todosLosProductos = [
 
         {
+          id:1,
           nombre:"MEDIC CREME ZIP HOODIE",
           precio:148500,
           categoria:"hoodies",
-          imagen:"medic.png"
-
+          imagen:"medic.png",
         },
       
         {
+          id:2,
           nombre:"WARFARE HOODIE",
           precio:129900,
           categoria:"hoodies",
-          imagen:"warfare.png"
+          imagen:"warfare.png",
         },
       
         {
+          id:3,
           nombre:"BLACK DENIM",
           precio:189000,
           categoria:"pantalones",
-          imagen:"black denim.png"
+          imagen:"black denim.png",
         },
       
         {
+          id:4,
           nombre:"STREET JACKET",
           precio:220000,
           categoria:"camperas",
-          imagen:"street jacket.png"
+          imagen:"street jacket.png",
         },
       
         {
+          id:5,
           nombre:"ESSENTIAL TEE",
           precio:78000,
           categoria:"remeras",
-          imagen:"essentialtee.png"
+          imagen:"essentialtee.png",
         },
       
         {
+          id:6,
           nombre:"OVERSIZED TEE",
           precio:82000,
           categoria:"remeras",
-          imagen:"oversizedtee.png"
+          imagen:"oversizedtee.png",
         },
       
         {
+          id:7,
           nombre:"UTILITY PANTS",
           precio:175000,
           categoria:"pantalones",
-          imagen:"utilitypants.png"
+          imagen:"utilitypants.png",
         },
       
         {
+          id:8,
           nombre:"TACTICAL HOODIE",
           precio:158000,
           categoria:"hoodies",
-          imagen:"tacticalhoodie.png"
+          imagen:"tacticalhoodie.png",
         },
       
         {
+          id:9,
           nombre:"CARGO PANTS",
           precio:195000,
           categoria:"pantalones",
-          imagen:"cargopants.png"
+          imagen:"cargopants.png",
         },
       
         {
+          id:10,
           nombre:"MINIMAL JACKET",
           precio:248000,
           categoria:"camperas",
-          imagen:"minimaljacket.png"
+          imagen:"minimaljacket.png",
         }
       
       ];
@@ -375,7 +384,10 @@ function renderProducts(products){
     );
   
     container.innerHTML += `
-      <div class="product-card" data-category="${product.categoria}">
+      <div 
+        class="product-card"
+        data-id="${product.id}"
+        data-category="${product.categoria}">
       
         <div class="product-image-wrap">
   
@@ -441,6 +453,34 @@ function renderProducts(products){
 
   activarBotonesFavoritos();
 
+  activarClickProducto();
+
+  }
+
+  function activarClickProducto(){
+
+    const cards =
+    document.querySelectorAll(
+      ".product-card"
+    );
+  
+    cards.forEach(card => {
+  
+      card.addEventListener(
+        "click",
+        () => {
+  
+          const id =
+          card.dataset.id;
+  
+          window.location.href =
+          `producto.html?id=${id}`;
+  
+        }
+      );
+  
+    });
+  
   }
 
   function activarBotonesFavoritos(){
@@ -482,6 +522,8 @@ function renderProducts(products){
 
 function agregarAFavoritos(e){
 
+  e.stopPropagation();
+
   const boton =
   e.currentTarget;
 
@@ -493,6 +535,9 @@ function agregarAFavoritos(e){
 
   const imagen =
   boton.dataset.image;
+
+  const url =
+  boton.dataset.url;
 
   const existe =
   favoritos.find(
@@ -523,7 +568,8 @@ function agregarAFavoritos(e){
 
           nombre,
           precio,
-          imagen
+          imagen,
+          url
 
       });
 
@@ -632,6 +678,8 @@ function activarBotonesCarrito(){
 /* AGREGAR AL CARRITO */
 
 function agregarAlCarrito(e){
+
+  e.stopPropagation();
 
   const nombre =
   e.target.dataset.name;
@@ -850,6 +898,31 @@ setInterval(() => {
   }
 
 },3000);
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const profileBtn =
+  document.getElementById(
+      "profileBtn"
+  );
+
+  if(!profileBtn) return;
+
+  const haySesion =
+  Auth.verificarSesion(false);
+
+  profileBtn.style.display =
+  haySesion
+  ? "inline-flex"
+  : "none";
+
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  Auth.aplicarPermisosPorRol();
+
+});
 
 /* INIT */
 
