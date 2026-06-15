@@ -1,4 +1,3 @@
-
 Auth.inicializarModo();
 
 const themeButton =
@@ -11,7 +10,7 @@ const themeIcon =
 function actualizarIconoTema(){
 
     const modo =
-        document.body.getAttribute("data-modo");
+        document.documentElement.getAttribute("data-modo");
 
     // MODO CLARO
     if(modo === "claro"){
