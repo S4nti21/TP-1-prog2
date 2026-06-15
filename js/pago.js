@@ -1,4 +1,3 @@
-
 Auth.inicializarModo();
 
 const themeButton =
@@ -11,7 +10,7 @@ const themeIcon =
 function actualizarIconoTema(){
 
     const modo =
-        document.body.getAttribute("data-modo");
+        document.documentElement.getAttribute("data-modo");
 
     // CLARO
     if(modo === "claro"){
@@ -45,23 +44,10 @@ themeButton.addEventListener("click", () => {
 // ICONO INICIAL
 actualizarIconoTema();
 
-const productos = [
+/* LEER CARRITO REAL DEL LOCALSTORAGE */
 
-    {
-        nombre: "REMERA OVERSIZE",
-        talle: "M",
-        precio: 25000,
-        imagen: "../img/remera.jpg"
-    },
-
-    {
-        nombre: "BUZO ESSENTIAL",
-        talle: "L",
-        precio: 40000,
-        imagen: "../img/buzo.jpg"
-    }
-
-];
+const productos =
+    JSON.parse(localStorage.getItem("carrito")) || [];
 
 const summaryProducts =
     document.getElementById("summaryProducts");
@@ -96,6 +82,21 @@ const cardCvv =
 
 function renderizarProductos(){
 
+    // CARRITO VACIO
+    if(productos.length === 0){
+
+        summaryProducts.innerHTML = `
+            <p style="color:#999; font-size:.85rem;">
+                No hay productos en el carrito.
+            </p>
+        `;
+
+        paymentTotal.textContent = "$0";
+
+        return;
+
+    }
+
     // LIMPIAR
     summaryProducts.innerHTML = "";
 
@@ -105,7 +106,7 @@ function renderizarProductos(){
     // RECORRER
     productos.forEach((producto) => {
 
-        total += producto.precio;
+        total += producto.precio * producto.cantidad;
 
         // HTML
         const productoHTML = `
@@ -132,12 +133,16 @@ function renderizarProductos(){
                         Talle ${producto.talle}
                     </p>
 
+                    <p>
+                        Cantidad: ${producto.cantidad}
+                    </p>
+
                 </div>
 
                 <!-- PRICE -->
                 <span>
 
-                    $${producto.precio.toLocaleString("es-AR")}
+                    $${(producto.precio * producto.cantidad).toLocaleString("es-AR")}
 
                 </span>
 
@@ -224,7 +229,7 @@ paymentForm.addEventListener("submit", (event) => {
         ){
 
             paymentMessage.textContent =
-                "Completa todos los datos";
+                "Completa todos los datos de la tarjeta";
 
             paymentMessage.classList.add("error");
 
@@ -234,20 +239,28 @@ paymentForm.addEventListener("submit", (event) => {
 
     }
 
-    // EXITO
+    // EXITO — vaciar el carrito
+    localStorage.removeItem("carrito");
+
     paymentMessage.textContent =
-        "Pago realizado correctamente";
+        "¡Pago aprobado con éxito! Gracias por tu compra.";
 
     paymentMessage.classList.add("success");
 
-    // LIMPIAR
+    // LIMPIAR FORM
     paymentForm.reset();
 
     // OCULTAR TARJETA
     cardFields.style.display =
         "none";
 
+    // REDIRIGIR AL INICIO DESPUES DE 3 SEGUNDOS
+    setTimeout(() => {
+
+        window.location.href = "./index.html";
+
+    }, 3000);
+
 });
 
 renderizarProductos();
-
