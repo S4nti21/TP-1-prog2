@@ -184,7 +184,17 @@
          0
         </span>
 
-</a>
+        </a>
+
+        <!-- MODO OSCURO -->
+
+        <button
+          id="themeButton"
+          class="icon-btn"
+          title="Cambiar tema"
+        >
+          <i id="themeIcon" class="fa-solid fa-sun"></i>
+        </button>
       
       </div>
   
@@ -230,6 +240,36 @@
   <!-- PRODUCTS -->
 
   <section class="products-section">
+
+    <!-- BARRA DE FILTROS -->
+    <div class="filter-bar">
+
+      <div class="filter-group">
+        <label>Género</label>
+        <div class="filter-btns" id="filtroGenero">
+          <button class="filter-btn active" data-genero="all">Todos</button>
+          <button class="filter-btn" data-genero="hombre">Hombre</button>
+          <button class="filter-btn" data-genero="mujer">Mujer</button>
+          <button class="filter-btn" data-genero="unisex">Unisex</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Color</label>
+        <div class="filter-btns" id="filtroColor">
+          <button class="filter-btn active" data-color="all">Todos</button>
+          <button class="filter-btn" data-color="Negro">Negro</button>
+          <button class="filter-btn" data-color="Blanco">Blanco</button>
+          <button class="filter-btn" data-color="Gris">Gris</button>
+          <button class="filter-btn" data-color="Beige">Beige</button>
+          <button class="filter-btn" data-color="Verde">Verde</button>
+          <button class="filter-btn" data-color="Crema">Crema</button>
+        </div>
+      </div>
+
+      <button class="filter-reset" id="resetFiltros">Limpiar filtros</button>
+
+    </div>
 
     <div
       class="products-container"

@@ -1,3 +1,25 @@
+// MODO OSCURO
+Auth.inicializarModo();
+
+const themeButton = document.getElementById("themeButton");
+const themeIcon   = document.getElementById("themeIcon");
+
+function actualizarIconoTema() {
+  const modo = document.documentElement.getAttribute("data-modo");
+  if (modo === "claro") {
+    themeIcon.classList.replace("fa-moon", "fa-sun");
+  } else {
+    themeIcon.classList.replace("fa-sun", "fa-moon");
+  }
+}
+
+themeButton.addEventListener("click", () => {
+  Auth.toggleModo();
+  actualizarIconoTema();
+});
+
+actualizarIconoTema();
+
 let favoritos =
 JSON.parse(
   localStorage.getItem("favoritos")
@@ -347,8 +369,14 @@ async function obtenerProductos(){
       const productosBackend =
       data.payload.map(product => ({
 
-        nombre: product.producto,
-        precio: product.precio
+        id:        product._id || product.id,
+        nombre:    product.producto || product.nombre,
+        precio:    Number(product.precio),
+        categoria: product.categoria || "general",
+        imagen:    product.imagen    || "placeholder.png",
+        color:     product.color     || "",
+        talles:    product.talles    || ["S","M","L","XL"],
+        stock:     product.stock !== undefined ? product.stock : 10
 
       }));
 
@@ -387,7 +415,9 @@ function renderProducts(products){
       <div 
         class="product-card"
         data-id="${product.id}"
-        data-category="${product.categoria}">
+        data-category="${product.categoria}"
+        data-genero="${product.genero || 'unisex'}"
+        data-color="${product.color || ''}">
       
         <div class="product-image-wrap">
   
@@ -438,8 +468,9 @@ function renderProducts(products){
           data-name="${product.nombre}"
           data-price="${product.precio}"
           data-image="${product.imagen}"
+          ${product.stock === 0 ? "disabled style=\"opacity:.4;cursor:not-allowed\"" : ""}
         >
-          AGREGAR AL CARRITO
+          ${product.stock === 0 ? "SIN STOCK" : "AGREGAR AL CARRITO"}
         </button>
   
       </div>
@@ -500,7 +531,7 @@ function renderProducts(products){
     });
   }
 
-  function mostrarToast(mensaje){
+function mostrarToast(mensaje){
 
     const toast =
     document.getElementById("toast");
@@ -679,6 +710,15 @@ function activarBotonesCarrito(){
 
 function agregarAlCarrito(e){
 
+  // VERIFICAR LOGIN
+  const usuario = Auth.obtenerUsuarioLogueado();
+  if(!usuario){
+    mostrarToast("Debes iniciar sesion para agregar al carrito");
+    setTimeout(() => { window.location.href = "./login.html"; }, 1500);
+    return;
+  }
+
+
   e.stopPropagation();
 
   const nombre =
@@ -808,6 +848,63 @@ function filtrarProductos(categoria){
 
   });
 
+}
+
+/* FILTROS GÉNERO Y COLOR */
+
+let filtroGeneroActivo = "all";
+let filtroColorActivo  = "all";
+
+function aplicarFiltrosCombinados() {
+
+  const cards = document.querySelectorAll(".product-card");
+
+  cards.forEach(card => {
+
+    const generoCard = card.dataset.genero || "all";
+    const colorCard  = card.dataset.color  || "all";
+
+    const pasaGenero = filtroGeneroActivo === "all" || generoCard === filtroGeneroActivo;
+    const pasaColor  = filtroColorActivo  === "all" || colorCard  === filtroColorActivo;
+
+    card.style.display = (pasaGenero && pasaColor) ? "flex" : "none";
+
+  });
+
+}
+
+// BOTONES GÉNERO
+const botonesGenero = document.querySelectorAll("#filtroGenero .filter-btn");
+botonesGenero.forEach(btn => {
+  btn.addEventListener("click", () => {
+    botonesGenero.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    filtroGeneroActivo = btn.dataset.genero;
+    aplicarFiltrosCombinados();
+  });
+});
+
+// BOTONES COLOR
+const botonesColor = document.querySelectorAll("#filtroColor .filter-btn");
+botonesColor.forEach(btn => {
+  btn.addEventListener("click", () => {
+    botonesColor.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    filtroColorActivo = btn.dataset.color;
+    aplicarFiltrosCombinados();
+  });
+});
+
+// RESET
+const resetFiltros = document.getElementById("resetFiltros");
+if (resetFiltros) {
+  resetFiltros.addEventListener("click", () => {
+    filtroGeneroActivo = "all";
+    filtroColorActivo  = "all";
+    botonesGenero.forEach(b => b.classList.toggle("active", b.dataset.genero === "all"));
+    botonesColor.forEach(b  => b.classList.toggle("active", b.dataset.color  === "all"));
+    document.querySelectorAll(".product-card").forEach(c => c.style.display = "flex");
+  });
 }
 
 const header =

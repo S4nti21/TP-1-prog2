@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es" data-modo="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Lana & Lino</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <a href="./index.html" class="admin-back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Tienda
+      </a>
+    </div>
+    <div class="header-center">
+      <span class="header-brand">LANA & LINO — ADMIN</span>
+    </div>
+    <div class="header-right">
+      <button id="themeButton" class="icon-btn" title="Cambiar tema">
+        <i id="themeIcon" class="fa-solid fa-sun"></i>
+      </button>
+      <button class="icon-btn" id="btnCerrarSesion" title="Cerrar sesión">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <button class="sidebar-btn active" data-tab="cargar">
+        <i class="fa-solid fa-plus"></i> Cargar producto
+      </button>
+      <button class="sidebar-btn" data-tab="gestionar">
+        <i class="fa-solid fa-list"></i> Gestionar productos
+      </button>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <section class="admin-content">
+
+      <!-- TAB: CARGAR PRODUCTO -->
+      <div class="admin-tab active" id="tab-cargar">
+
+        <h2>Cargar nuevo producto</h2>
+
+        <form class="admin-form" id="formCargar">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre *</label>
+              <input type="text" id="c-nombre" placeholder="Ej: ESSENTIAL TEE" required>
+            </div>
+            <div class="form-group">
+              <label>Precio *</label>
+              <input type="number" id="c-precio" placeholder="Ej: 78000" min="0" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Descripción *</label>
+            <textarea id="c-descripcion" rows="3" placeholder="Descripción del producto..." required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Categoría *</label>
+              <select id="c-categoria" required>
+                <option value="">Seleccionar...</option>
+                <option value="remeras">Remeras</option>
+                <option value="hoodies">Hoodies</option>
+                <option value="camperas">Camperas</option>
+                <option value="pantalones">Pantalones</option>
+                <option value="bermudas">Bermudas</option>
+                <option value="calzado">Calzado</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Género *</label>
+              <select id="c-genero" required>
+                <option value="">Seleccionar...</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="unisex">Unisex</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Color *</label>
+              <input type="text" id="c-color" placeholder="Ej: Negro" required>
+            </div>
+            <div class="form-group">
+              <label>Stock *</label>
+              <input type="number" id="c-stock" placeholder="Ej: 10" min="0" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Talles disponibles *</label>
+            <div class="talles-grid" id="c-talles">
+              <label class="talle-check"><input type="checkbox" value="XS"> XS</label>
+              <label class="talle-check"><input type="checkbox" value="S"> S</label>
+              <label class="talle-check"><input type="checkbox" value="M"> M</label>
+              <label class="talle-check"><input type="checkbox" value="L"> L</label>
+              <label class="talle-check"><input type="checkbox" value="XL"> XL</label>
+              <label class="talle-check"><input type="checkbox" value="28"> 28</label>
+              <label class="talle-check"><input type="checkbox" value="30"> 30</label>
+              <label class="talle-check"><input type="checkbox" value="32"> 32</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Imagen (nombre del archivo)</label>
+            <input type="text" id="c-imagen" placeholder="Ej: remera.png">
+          </div>
+
+          <p id="msg-cargar" class="admin-msg"></p>
+
+          <button type="submit" class="admin-btn-primary">
+            <i class="fa-solid fa-plus"></i> Cargar producto
+          </button>
+
+        </form>
+      </div>
+
+      <!-- TAB: GESTIONAR PRODUCTOS -->
+      <div class="admin-tab" id="tab-gestionar">
+
+        <div class="gestionar-header">
+          <h2>Gestionar productos</h2>
+          <div class="search-bar">
+            <input type="text" id="searchAdmin" placeholder="Buscar producto...">
+            <button id="btnSearchAdmin"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+        </div>
+
+        <p id="msg-gestionar" class="admin-msg"></p>
+
+        <div class="admin-tabla-wrap">
+          <table class="admin-tabla" id="tablaProductos">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Color</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyProductos">
+              <tr><td colspan="6" class="loading-cell">Cargando productos...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <!-- MODAL EDITAR -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Modificar producto</h3>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <input type="hidden" id="m-id">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" id="m-nombre">
+          </div>
+          <div class="form-group">
+            <label>Precio</label>
+            <input type="number" id="m-precio" min="0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="m-descripcion" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Categoría</label>
+            <select id="m-categoria">
+              <option value="remeras">Remeras</option>
+              <option value="hoodies">Hoodies</option>
+              <option value="camperas">Camperas</option>
+              <option value="pantalones">Pantalones</option>
+              <option value="bermudas">Bermudas</option>
+              <option value="calzado">Calzado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Género</label>
+            <select id="m-genero">
+              <option value="hombre">Hombre</option>
+              <option value="mujer">Mujer</option>
+              <option value="unisex">Unisex</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Color</label>
+            <input type="text" id="m-color">
+          </div>
+          <div class="form-group">
+            <label>Stock</label>
+            <input type="number" id="m-stock" min="0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Talles disponibles</label>
+          <div class="talles-grid" id="m-talles">
+            <label class="talle-check"><input type="checkbox" value="XS"> XS</label>
+            <label class="talle-check"><input type="checkbox" value="S"> S</label>
+            <label class="talle-check"><input type="checkbox" value="M"> M</label>
+            <label class="talle-check"><input type="checkbox" value="L"> L</label>
+            <label class="talle-check"><input type="checkbox" value="XL"> XL</label>
+            <label class="talle-check"><input type="checkbox" value="28"> 28</label>
+            <label class="talle-check"><input type="checkbox" value="30"> 30</label>
+            <label class="talle-check"><input type="checkbox" value="32"> 32</label>
+          </div>
+        </div>
+
+        <p id="msg-modal" class="admin-msg"></p>
+
+      </div>
+      <div class="modal-footer">
+        <button class="admin-btn-secondary" id="modalCancelar">Cancelar</button>
+        <button class="admin-btn-primary" id="modalGuardar">
+          <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/admin.js"></script>
+
+</body>
+</html>
