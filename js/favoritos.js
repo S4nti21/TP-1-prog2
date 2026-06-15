@@ -79,6 +79,7 @@ function renderizarFavoritos(){
     });
 
     activarBotonesEliminar();
+    activarCardsFavoritas();
 
 }
 
@@ -119,8 +120,6 @@ function activarBotonesEliminar(){
     });
 
 }
-activarCardsFavoritas();
-
 function activarCardsFavoritas(){
 
     const cards =
