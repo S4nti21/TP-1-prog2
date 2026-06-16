@@ -551,3 +551,16 @@ a{
 
     color:white;
 }
+
+#cartProducts{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:25px;
+}
+
+.product-card{
+    opacity:1 !important;
+    visibility:visible !important;
+    display:flex !important;
+    transform:none !important;
+}
