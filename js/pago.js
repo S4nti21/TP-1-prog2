@@ -1,5 +1,10 @@
 Auth.inicializarModo();
 
+// VERIFICAR SESIÓN
+if (!Auth.obtenerUsuarioLogueado()) {
+    window.location.href = "./login.html";
+}
+
 const themeButton =
     document.getElementById("themeButton");
 
@@ -7,13 +12,13 @@ const themeIcon =
     document.getElementById("themeIcon");
 
 // ACTUALIZAR ICONO
-function actualizarIconoTema(){
+function actualizarIconoTema() {
 
     const modo =
         document.documentElement.getAttribute("data-modo");
 
     // CLARO
-    if(modo === "claro"){
+    if (modo === "claro") {
 
         themeIcon.classList.remove("fa-moon");
 
@@ -22,7 +27,7 @@ function actualizarIconoTema(){
     }
 
     // OSCURO
-    else{
+    else {
 
         themeIcon.classList.remove("fa-sun");
 
@@ -80,10 +85,10 @@ const cardDate =
 const cardCvv =
     document.getElementById("cardCvv");
 
-function renderizarProductos(){
+function renderizarProductos() {
 
     // CARRITO VACIO
-    if(productos.length === 0){
+    if (productos.length === 0) {
 
         summaryProducts.innerHTML = `
             <p style="color:#999; font-size:.85rem;">
@@ -168,10 +173,10 @@ paymentMethod.addEventListener("change", () => {
         paymentMethod.value;
 
     // MOSTRAR
-    if(
+    if (
         metodo === "debito" ||
         metodo === "credito"
-    ){
+    ) {
 
         cardFields.style.display =
             "block";
@@ -179,7 +184,7 @@ paymentMethod.addEventListener("change", () => {
     }
 
     // OCULTAR
-    else{
+    else {
 
         cardFields.style.display =
             "none";
@@ -204,7 +209,7 @@ paymentForm.addEventListener("submit", (event) => {
         paymentMethod.value;
 
     // VALIDAR METODO
-    if(metodo === ""){
+    if (metodo === "") {
 
         paymentMessage.textContent =
             "Selecciona un método de pago";
@@ -216,17 +221,17 @@ paymentForm.addEventListener("submit", (event) => {
     }
 
     // VALIDAR TARJETA
-    if(
+    if (
         metodo === "debito" ||
         metodo === "credito"
-    ){
+    ) {
 
-        if(
+        if (
             cardNumber.value.trim() === "" ||
             cardName.value.trim() === "" ||
             cardDate.value.trim() === "" ||
             cardCvv.value.trim() === ""
-        ){
+        ) {
 
             paymentMessage.textContent =
                 "Completa todos los datos de la tarjeta";
@@ -262,5 +267,36 @@ paymentForm.addEventListener("submit", (event) => {
     }, 3000);
 
 });
+
+
+// HABILITAR BOTON PAGAR
+function verificarFormulario() {
+    const metodo = paymentMethod.value;
+    const btnPagar = document.getElementById("btnPagar");
+
+    if (metodo === "") {
+        btnPagar.disabled = true;
+        return;
+    }
+
+    if (metodo === "debito" || metodo === "credito") {
+        const camposCompletos =
+            cardNumber.value.trim() !== "" &&
+            cardName.value.trim() !== "" &&
+            cardDate.value.trim() !== "" &&
+            cardCvv.value.trim() !== "";
+
+        btnPagar.disabled = !camposCompletos;
+    } else {
+        // transferencia — solo necesita el método seleccionado
+        btnPagar.disabled = false;
+    }
+}
+
+paymentMethod.addEventListener("change", verificarFormulario);
+cardNumber.addEventListener("input", verificarFormulario);
+cardName.addEventListener("input", verificarFormulario);
+cardDate.addEventListener("input", verificarFormulario);
+cardCvv.addEventListener("input", verificarFormulario);
 
 renderizarProductos();

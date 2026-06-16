@@ -38,7 +38,7 @@ function obtenerUsuarioLogueado() {
 function verificarSesion(redirigir = true) {
   const usuario = obtenerUsuarioLogueado();
   if (!usuario) {
-    if (redirigir) window.location.href = "../pages/login.html";
+    if (redirigir) window.location.href = "./login.html";
     return false;
   }
   return true;
@@ -46,7 +46,9 @@ function verificarSesion(redirigir = true) {
 
 function cerrarSesion() {
   localStorage.removeItem(STORAGE_KEY);
-  window.location.href = "../pages/login.html";
+  localStorage.removeItem("carrito");
+  localStorage.removeItem("favoritos");
+  window.location.href = "./login.html";
 }
 
 // ============================================================
