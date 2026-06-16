@@ -823,9 +823,7 @@ body{
   visibility:visible;
   transform:translateY(0);
 }
-/* ===========================
-   FILTROS GÉNERO / COLOR
-   =========================== */
+/*FILTROS GÉNERO / COLOR*/
 
 .filter-bar {
   display: flex;

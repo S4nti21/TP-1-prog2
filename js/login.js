@@ -3,19 +3,16 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    // Si ya hay sesión iniciada, mandar al inicio
     if (Auth.verificarSesion(false)) {
         window.location.href = "./index.html";
         return;
     }
 
-    // Eventos
     document.getElementById("formLogin").addEventListener("submit", manejarLogin);
 
 });
 
 
-// Maneja el submit del formulario de login
 async function manejarLogin(e) {
 
     e.preventDefault();
@@ -36,7 +33,6 @@ async function manejarLogin(e) {
     try {
         var usuario = await Auth.loginUsuario(email, password);
 
-        // Guardar el usuario en localStorage
         Auth.guardarSesion(usuario);
 
         Auth.mostrarMensaje(mensajeEl, "Sesión iniciada correctamente. Redirigiendo...", "exito");

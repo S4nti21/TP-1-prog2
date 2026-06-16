@@ -205,14 +205,11 @@ function activarFavorito(producto) {
     const btn = document.getElementById("btnFavorito");
     if (!btn) return;
 
-    // VERIFICAR LOGIN
     const usuario = Auth.obtenerUsuarioLogueado();
     if (!usuario) return;
 
-    // CLAVE DE FAVORITOS DEL USUARIO
     const FAVORITOS_KEY = `favoritos_${usuario.id_usuario}`;
 
-    // LEER FAVORITOS DEL USUARIO
     let favoritos =
         JSON.parse(localStorage.getItem(FAVORITOS_KEY)) || [];
 
@@ -225,7 +222,6 @@ function activarFavorito(producto) {
 
     btn.addEventListener("click", () => {
 
-        // VOLVER A LEER LOS FAVORITOS ACTUALIZADOS
         let favoritos =
             JSON.parse(localStorage.getItem(FAVORITOS_KEY)) || [];
 
@@ -296,7 +292,6 @@ function actualizarFavoritos() {
 
     const usuario = Auth.obtenerUsuarioLogueado();
 
-    // Si no hay usuario logueado, mostrar 0
     if (!usuario) {
         const contador = document.getElementById("favoritesCounter");
         if (contador) contador.textContent = "0";
@@ -338,13 +333,11 @@ async function init() {
             const producto = productosBackend.find(p => p.id == id || p.id === id);
             renderizarProducto(producto || null);
         } else {
-            // Backend vacío → usar locales
             const producto = productosLocales.find(p => p.id === id);
             renderizarProducto(producto || null);
         }
 
     } catch (e) {
-        // Backend caído → usar locales
         const producto = productosLocales.find(p => p.id === id);
         renderizarProducto(producto || null);
     }

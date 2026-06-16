@@ -3,7 +3,6 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    // Si ya tiene sesión, mandarlo al inicio
     if (Auth.verificarSesion(false)) {
         window.location.href = "./index.html";
         return;
@@ -37,7 +36,6 @@ async function manejarRegistro(e) {
     Auth.setBotonCargando(boton, true, "Crear cuenta");
 
     try {
-        // Armar el objeto con los datos del usuario
         var datosUsuario = {
             nombre: nombre,
             apellido: apellido,

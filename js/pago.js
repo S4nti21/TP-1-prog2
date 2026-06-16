@@ -253,7 +253,6 @@ function verificarFormulario() {
 
         btnPagar.disabled = !camposCompletos;
     } else {
-        // transferencia — solo necesita el método seleccionado
         btnPagar.disabled = false;
     }
 }

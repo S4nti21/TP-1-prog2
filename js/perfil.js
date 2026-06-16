@@ -10,20 +10,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     Auth.inicializarModo();
     actualizarIconoModo();
 
-    // Si no hay sesión, redirigir al login
     if (!Auth.verificarSesion(true)) {
         return;
     }
 
     usuarioActual = Auth.obtenerUsuarioLogueado();
 
-    // Cargar el perfil desde la API
     await cargarPerfil();
 
-    // Aplicar visibilidad según rol (admin o no)
     Auth.aplicarPermisosPorRol();
 
-    // Eventos de los botones
     document.getElementById("btnEditar").addEventListener("click", activarEdicion);
     document.getElementById("btnGuardar").addEventListener("click", guardarCambios);
     document.getElementById("btnCancelar").addEventListener("click", cancelarEdicion);
@@ -40,19 +36,15 @@ async function cargarPerfil() {
         var id = usuarioActual.id_usuario || usuarioActual.id;
         var datos = await Auth.obtenerPerfil(id);
 
-        // Actualizar localStorage con los datos frescos de la API
         Auth.guardarSesion(Object.assign({}, usuarioActual, datos));
         usuarioActual = Auth.obtenerUsuarioLogueado();
 
     } catch (error) {
-        // Si falla la API, usar los datos que ya tenemos en localStorage
         console.log("No se pudo cargar desde la API, se usan datos locales.");
     }
 
-    // Mostrar los datos en pantalla
     mostrarDatosPerfil(usuarioActual);
 
-    // Ocultar el loading y mostrar el contenido
     document.getElementById("cargandoPerfil").style.display = "none";
     document.getElementById("paginaPerfil").style.display = "block";
 
@@ -74,7 +66,6 @@ function mostrarDatosPerfil(usuario) {
     document.getElementById("editTelefono").value = usuario.telefono || "";
     document.getElementById("editDireccion").value = usuario.direccion || "";
 
-    // Mostrar iniciales en el avatar
     var inicial1 = usuario.nombre ? usuario.nombre.charAt(0).toUpperCase() : "?";
     var inicial2 = usuario.apellido ? usuario.apellido.charAt(0).toUpperCase() : "";
     var avatar = document.getElementById("avatarIniciales");
@@ -154,17 +145,14 @@ async function guardarCambios() {
 
         var respuesta = await Auth.actualizarPerfil(id, datosActualizados);
 
-        // Actualizar el usuario en localStorage
         var usuarioNuevo = Object.assign({}, usuarioActual, datosActualizados, respuesta);
         Auth.guardarSesion(usuarioNuevo);
         usuarioActual = usuarioNuevo;
 
-        // Actualizar la pantalla
         mostrarDatosPerfil(usuarioActual);
 
         Auth.mostrarMensaje(mensajeEl, "Datos actualizados correctamente.", "exito");
 
-        // Salir del modo edición después de un momento
         setTimeout(function () {
             cancelarEdicion();
         }, 1500);
