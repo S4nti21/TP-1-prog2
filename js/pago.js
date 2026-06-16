@@ -5,49 +5,13 @@ if (!Auth.obtenerUsuarioLogueado()) {
     window.location.href = "./login.html";
 }
 
-const themeButton =
-    document.getElementById("themeButton");
+// VERIFICAR QUE HAYA PRODUCTOS EN EL CARRITO
+const carrito =
+    JSON.parse(localStorage.getItem("carrito")) || [];
 
-const themeIcon =
-    document.getElementById("themeIcon");
-
-// ACTUALIZAR ICONO
-function actualizarIconoTema() {
-
-    const modo =
-        document.documentElement.getAttribute("data-modo");
-
-    // CLARO
-    if (modo === "claro") {
-
-        themeIcon.classList.remove("fa-moon");
-
-        themeIcon.classList.add("fa-sun");
-
-    }
-
-    // OSCURO
-    else {
-
-        themeIcon.classList.remove("fa-sun");
-
-        themeIcon.classList.add("fa-moon");
-
-    }
-
+if (carrito.length === 0) {
+    window.location.href = "./carrito.html";
 }
-
-// EVENTO
-themeButton.addEventListener("click", () => {
-
-    Auth.toggleModo();
-
-    actualizarIconoTema();
-
-});
-
-// ICONO INICIAL
-actualizarIconoTema();
 
 /* LEER CARRITO REAL DEL LOCALSTORAGE */
 
