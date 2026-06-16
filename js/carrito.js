@@ -11,7 +11,7 @@ const themeButton =
 const themeIcon =
     document.getElementById("themeIcon");
 
-if(themeButton && themeIcon){
+if (themeButton && themeIcon) {
 
     actualizarIconoTema();
 
@@ -53,9 +53,12 @@ function actualizarIconoTema() {
 
 /* LOCAL STORAGE */
 
+const usuario = Auth.obtenerUsuarioLogueado();
+const CARRITO_KEY = `carrito_${usuario.id_usuario}`;
+
 let carrito =
     JSON.parse(
-        localStorage.getItem("carrito")
+        localStorage.getItem(CARRITO_KEY)
     ) || [];
 
 const cartProducts =
@@ -183,7 +186,7 @@ function eliminarProducto(idProducto) {
     /* ACTUALIZAR STORAGE */
 
     localStorage.setItem(
-        "carrito",
+        CARRITO_KEY,
         JSON.stringify(carrito)
     );
 
@@ -191,9 +194,7 @@ function eliminarProducto(idProducto) {
 
     if (carrito.length === 0) {
 
-        localStorage.removeItem(
-            "carrito"
-        );
+        localStorage.removeItem(CARRITO_KEY);
 
     }
 

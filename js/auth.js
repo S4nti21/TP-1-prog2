@@ -14,10 +14,10 @@ const BASE_URL = "http://localhost:4000/api"; // <-- CAMBIAR POR LA URL REAL
 
 // Rutas reales del backend
 const API_ENDPOINTS = {
-  login:    `${BASE_URL}/login`,
+  login: `${BASE_URL}/login`,
   registro: `${BASE_URL}/registrarUsuario`,
-  perfil:   `${BASE_URL}/obtenerDatosUsuario`,   // + /:id
-  modificar:`${BASE_URL}/modificarUsuario`,       // + /:id
+  perfil: `${BASE_URL}/obtenerDatosUsuario`,   // + /:id
+  modificar: `${BASE_URL}/modificarUsuario`,       // + /:id
 };
 
 const STORAGE_KEY = "lanaLino_usuario";
@@ -46,8 +46,6 @@ function verificarSesion(redirigir = true) {
 
 function cerrarSesion() {
   localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem("carrito");
-  localStorage.removeItem("favoritos");
   window.location.href = "./login.html";
 }
 
@@ -122,10 +120,10 @@ async function loginUsuario(email, password) {
   const usuario = datos.payload[0];
   return {
     id_usuario: usuario.id_usuario,
-    nombre:     usuario.nombre,
-    apellido:   usuario.apellido,
-    rol:        usuario.rol,
-    token:      datos.jwt,
+    nombre: usuario.nombre,
+    apellido: usuario.apellido,
+    rol: usuario.rol,
+    token: datos.jwt,
   };
 }
 

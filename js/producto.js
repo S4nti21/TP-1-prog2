@@ -162,9 +162,14 @@ function activarCarrito(producto) {
         const usuario = Auth.obtenerUsuarioLogueado();
         if (!usuario) {
             mostrarToast("Debes iniciar sesión para agregar al carrito");
-            setTimeout(() => { window.location.href = "./login.html"; }, 1500);
+            setTimeout(() => {
+                window.location.href = "./login.html";
+            }, 1500);
             return;
         }
+
+        // CLAVE DEL CARRITO DEL USUARIO
+        const CARRITO_KEY = `carrito_${usuario.id_usuario}`;
 
         // VERIFICAR TALLE
         if (!talleSeleccionado) {
@@ -172,8 +177,11 @@ function activarCarrito(producto) {
             return;
         }
 
-        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        // LEER EL CARRITO DE ESE USUARIO
+        let carrito =
+            JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
 
+        // AGREGAR PRODUCTO
         carrito.push({
             id: Date.now(),
             nombre: producto.nombre,
@@ -183,7 +191,12 @@ function activarCarrito(producto) {
             cantidad: 1
         });
 
-        localStorage.setItem("carrito", JSON.stringify(carrito));
+        // GUARDAR EL CARRITO DE ESE USUARIO
+        localStorage.setItem(
+            CARRITO_KEY,
+            JSON.stringify(carrito)
+        );
+
         mostrarToast("Producto agregado al carrito ✓");
     });
 }
@@ -193,16 +206,32 @@ function activarFavorito(producto) {
     const btn = document.getElementById("btnFavorito");
     if (!btn) return;
 
-    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    const existe = favoritos.some(p => p.id === producto.id);
+    // VERIFICAR LOGIN
+    const usuario = Auth.obtenerUsuarioLogueado();
+    if (!usuario) return;
+
+    // CLAVE DE FAVORITOS DEL USUARIO
+    const FAVORITOS_KEY = `favoritos_${usuario.id_usuario}`;
+
+    // LEER FAVORITOS DEL USUARIO
+    let favoritos =
+        JSON.parse(localStorage.getItem(FAVORITOS_KEY)) || [];
+
+    const existe =
+        favoritos.some(p => p.id === producto.id);
 
     btn.innerHTML = existe
         ? `<i class="fa-solid fa-bookmark"></i>`
         : `<i class="fa-regular fa-bookmark"></i>`;
 
     btn.addEventListener("click", () => {
-        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-        const index = favoritos.findIndex(p => p.id === producto.id);
+
+        // VOLVER A LEER LOS FAVORITOS ACTUALIZADOS
+        let favoritos =
+            JSON.parse(localStorage.getItem(FAVORITOS_KEY)) || [];
+
+        const index =
+            favoritos.findIndex(p => p.id === producto.id);
 
         if (index > -1) {
             favoritos.splice(index, 1);
@@ -212,7 +241,12 @@ function activarFavorito(producto) {
             btn.innerHTML = `<i class="fa-solid fa-bookmark"></i>`;
         }
 
-        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        // GUARDAR LOS FAVORITOS DEL USUARIO
+        localStorage.setItem(
+            FAVORITOS_KEY,
+            JSON.stringify(favoritos)
+        );
+
         actualizarFavoritos();
     });
 }
@@ -249,9 +283,27 @@ function mostrarToast(mensaje) {
 
 /* CONTADOR FAVORITOS */
 function actualizarFavoritos() {
-    const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    const contador = document.getElementById("favoritesCounter");
-    if (contador) contador.textContent = favoritos.length;
+
+    const usuario = Auth.obtenerUsuarioLogueado();
+
+    // Si no hay usuario logueado, mostrar 0
+    if (!usuario) {
+        const contador = document.getElementById("favoritesCounter");
+        if (contador) contador.textContent = "0";
+        return;
+    }
+
+    const FAVORITOS_KEY = `favoritos_${usuario.id_usuario}`;
+
+    const favoritos =
+        JSON.parse(localStorage.getItem(FAVORITOS_KEY)) || [];
+
+    const contador =
+        document.getElementById("favoritesCounter");
+
+    if (contador) {
+        contador.textContent = favoritos.length;
+    }
 }
 
 /* ARRANCAR — primero intentar backend, si falla usar local */
