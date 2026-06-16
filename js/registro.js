@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Si ya tiene sesión, mandarlo al inicio
     if (Auth.verificarSesion(false)) {
-        window.location.href = "../index.html";
+        window.location.href = "./index.html";
         return;
     }
 

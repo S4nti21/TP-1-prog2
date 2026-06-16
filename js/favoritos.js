@@ -57,8 +57,13 @@ function renderizarFavoritos() {
             <div class="product-image-wrap">
 
         <img
+<<<<<<< HEAD
             src="../assets/${producto.imagen}"
             alt="${producto.nombre}"
+=======
+        src="${producto.imagen.startsWith('../') ? producto.imagen : '../assets/' + producto.imagen}"
+        alt="${producto.nombre}"
+>>>>>>> 67c48002feb747d740de260565ab78796339912c
         >
 
         <button

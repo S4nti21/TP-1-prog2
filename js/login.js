@@ -47,7 +47,7 @@ async function manejarLogin(e) {
         Auth.mostrarMensaje(mensajeEl, "Sesión iniciada correctamente. Redirigiendo...", "exito");
 
         setTimeout(function() {
-            window.location.href = "../index.html";
+            window.location.href = "./index.html";
         }, 1000);
 
     } catch (error) {
