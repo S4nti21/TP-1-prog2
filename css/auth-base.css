@@ -1,13 +1,7 @@
-/* ============================================================
-   auth-base.css — Lana & Lino
-   Layout: fondo fullscreen difuminado + card centrada
-   ============================================================ */
 
-/* Barlow Condensed: grotesca condensada estilo streetwear europeo
-   Barlow: cuerpo limpio y funcional                                */
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap');
 
-/* ---------- Tokens ---------- */
+
 :root {
   --c-fondo:        #F7F5F0;
   --c-superficie:   rgba(255, 255, 255, 0.82);
@@ -26,7 +20,6 @@
   --r-tarjeta: 3px;
   --trans: 220ms ease;
 
-  /* Imagen de fondo — reemplazá con tu URL real */
   --bg-imagen: url('https://www.santandersmusic.com/media/magazine/banner-duki-xl.webp');
 }
 

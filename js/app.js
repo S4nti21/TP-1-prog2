@@ -8,7 +8,6 @@ const CARRITO_KEY = usuario
   ? `carrito_${usuario.id_usuario}`
   : "carrito";
 
-// 👇 Y CAMBIÁ ESTO
 let favoritos =
   JSON.parse(
     localStorage.getItem(FAVORITOS_KEY)
@@ -318,10 +317,6 @@ async function obtenerProductos() {
 }
 
 /* RENDER */
-
-/* ============================================================
-   REEMPLAZAR renderProducts() en app.js por esta versión
-   ============================================================ */
 
 function renderProducts(products) {
 
@@ -673,7 +668,7 @@ function agregarAlCarrito(e) {
   const nombre = e.target.dataset.name;
   const precio = e.target.dataset.price;
   const imagen = e.target.dataset.image;
-  const talle  = "M"; // cuando integres talles en el index, reemplazá esto
+  const talle  = "M";
 
   const productoExistente = carrito.find(
     p => p.nombre === nombre && p.talle === talle

@@ -1,6 +1,5 @@
-// ============================================================
+
 // ADMIN.JS — Gestión de productos para administradores
-// ============================================================
 
 // 1. VERIFICAR QUE SEA ADMIN
 Auth.inicializarModo();
@@ -76,9 +75,7 @@ function marcarTalles(contenedorId, talles = []) {
   });
 }
 
-// ============================================================
 // CARGAR PRODUCTO
-// ============================================================
 document.getElementById("formCargar").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -119,9 +116,7 @@ document.getElementById("formCargar").addEventListener("submit", async (e) => {
   }
 });
 
-// ============================================================
 // TABLA DE PRODUCTOS
-// ============================================================
 let todosLosProductos = [];
 
 async function cargarTabla(filtro = "") {
@@ -197,9 +192,7 @@ document.getElementById("searchAdmin").addEventListener("keydown", (e) => {
   if (e.key === "Enter") renderTabla(e.target.value);
 });
 
-// ============================================================
 // MODAL EDITAR
-// ============================================================
 const modalOverlay = document.getElementById("modalOverlay");
 
 function abrirModal(producto) {

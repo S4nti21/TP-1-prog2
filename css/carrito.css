@@ -1,9 +1,7 @@
 /* FONT */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
-/* =========================
-   RESET
-========================= */
+/*RESET*/
 
 *{
     margin:0;
@@ -22,9 +20,7 @@ a{
     color:#111;
 }
 
-/* =========================
-   HEADER
-========================= */
+/*HEADER*/
 
 .header{
     position:fixed;
@@ -114,9 +110,7 @@ a{
     align-items:center;
 }
 
-/* =========================
-   MAIN
-========================= */
+/*MAIN*/
 
 .cart-container{
     max-width:1400px;
@@ -131,9 +125,7 @@ a{
     gap:40px;
 }
 
-/* =========================
-   TITULO
-========================= */
+/*TITULO*/
 
 .cart-title{
     margin-bottom:40px;
@@ -149,9 +141,7 @@ a{
     color:#666;
 }
 
-/* =========================
-   PRODUCTOS
-========================= */
+/*PRODUCTOS*/
 
 .cart-product{
     display:flex;
@@ -250,9 +240,7 @@ a{
     color:red;
 }
 
-/* =========================
-   RESUMEN
-========================= */
+/*RESUMEN*/
 
 .cart-summary{
     background:white;
@@ -330,9 +318,7 @@ a{
     font-size:.85rem;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/*FOOTER*/
 
 .footer{
     margin-top:80px;
@@ -378,9 +364,7 @@ a{
     font-size:.9rem;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/*RESPONSIVE*/
 
 @media(max-width:1000px){
 
@@ -423,9 +407,7 @@ a{
 
 }
 
-/* =========================
-   CART CARDS
-========================= */
+/*CART CARDS*/
 
 .product-card{
 

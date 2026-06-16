@@ -1,6 +1,4 @@
-/* =========================
-   HEADER
-========================= */
+/*HEADER*/
 
 .header {
     background: rgba(255,255,255,.95) !important;
@@ -13,9 +11,7 @@
     color: #111 !important;
 }
 
-/* =========================
-   PAGE
-========================= */
+/*PAGE*/
 
 .favorites-page {
     max-width: 1200px;
@@ -23,9 +19,7 @@
     padding: 0 40px;
 }
 
-/* =========================
-   HEADER FAVORITOS
-========================= */
+/*HEADER FAVORITOS*/
 
 .favorites-header {
     margin-bottom: 40px;
@@ -47,9 +41,7 @@
     letter-spacing: 1px;
 }
 
-/* =========================
-   GRID
-========================= */
+/*GRID*/
 
 #favoritesContainer {
     display: grid;
@@ -58,9 +50,7 @@
     gap: 20px;
 }
 
-/* =========================
-   CARD
-========================= */
+/*CARD*/
 
 #favoritesContainer .product-card {
     opacity: 1;
@@ -78,9 +68,7 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
-/* =========================
-   IMAGEN
-========================= */
+/*IMAGEN*/
 
 #favoritesContainer .product-image-wrap {
     position: relative;
@@ -102,9 +90,7 @@
     transform: scale(1.03);
 }
 
-/* =========================
-   BOTÓN X (quitar)
-========================= */
+/*BOTÓN X (quitar)*/
 
 .remove-icon-btn {
     position: absolute;
@@ -129,9 +115,7 @@
     color: white;
 }
 
-/* =========================
-   INFO
-========================= */
+/*INFO*/
 
 #favoritesContainer .product-info {
     padding: 12px 14px 14px;
@@ -152,9 +136,7 @@
     color: #555;
 }
 
-/* =========================
-   VACÍO
-========================= */
+/*VACÍO*/
 
 .empty-favorites {
     grid-column: 1 / -1;
@@ -201,9 +183,7 @@
     opacity: 0.75;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/*RESPONSIVE*/
 
 @media (max-width: 768px) {
     .favorites-page {
