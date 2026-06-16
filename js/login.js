@@ -3,10 +3,6 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    // Inicializar modo oscuro/claro
-    Auth.inicializarModo();
-    actualizarIconoModo();
-
     // Si ya hay sesión iniciada, mandar al inicio
     if (Auth.verificarSesion(false)) {
         window.location.href = "./index.html";
@@ -15,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Eventos
     document.getElementById("formLogin").addEventListener("submit", manejarLogin);
-    document.getElementById("btnModo").addEventListener("click", cambiarModo);
 
 });
 
@@ -123,20 +118,4 @@ function limpiarErrores() {
 
     Auth.ocultarMensaje(document.getElementById("mensajeGlobal"));
 
-}
-
-
-// Cambia entre modo claro y oscuro
-function cambiarModo() {
-    Auth.toggleModo();
-    actualizarIconoModo();
-}
-
-
-// Actualiza el ícono del botón de modo
-function actualizarIconoModo() {
-    var icono = document.getElementById("iconoModo");
-    if (!icono) return;
-    var modo = document.documentElement.getAttribute("data-modo");
-    icono.textContent = modo === "oscuro" ? "🌙" : "☀️";
 }

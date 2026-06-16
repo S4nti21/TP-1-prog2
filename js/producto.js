@@ -158,7 +158,6 @@ function activarCarrito(producto) {
 
     btn.addEventListener("click", () => {
 
-        // VERIFICAR LOGIN
         const usuario = Auth.obtenerUsuarioLogueado();
         if (!usuario) {
             mostrarToast("Debes iniciar sesión para agregar al carrito");
@@ -168,36 +167,36 @@ function activarCarrito(producto) {
             return;
         }
 
-        // CLAVE DEL CARRITO DEL USUARIO
         const CARRITO_KEY = `carrito_${usuario.id_usuario}`;
 
-        // VERIFICAR TALLE
         if (!talleSeleccionado) {
             document.getElementById("talleError").style.display = "block";
             return;
         }
 
-        // LEER EL CARRITO DE ESE USUARIO
-        let carrito =
-            JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
+        let carrito = JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
 
-        // AGREGAR PRODUCTO
-        carrito.push({
-            id: Date.now(),
-            nombre: producto.nombre,
-            precio: producto.precio,
-            imagen: `../assets/${producto.imagen}`,
-            talle: talleSeleccionado,
-            cantidad: 1
-        });
-
-        // GUARDAR EL CARRITO DE ESE USUARIO
-        localStorage.setItem(
-            CARRITO_KEY,
-            JSON.stringify(carrito)
+        const productoExistente = carrito.find(
+            p => p.nombre === producto.nombre && p.talle === talleSeleccionado
         );
 
+        if (productoExistente) {
+            productoExistente.cantidad += 1;
+        } else {
+            carrito.push({
+                id: Date.now(),
+                nombre: producto.nombre,
+                precio: producto.precio,
+                imagen: `../assets/${producto.imagen}`,
+                talle: talleSeleccionado,
+                cantidad: 1
+            });
+        }
+
+        localStorage.setItem(CARRITO_KEY, JSON.stringify(carrito));
+
         mostrarToast("Producto agregado al carrito ✓");
+        actualizarContador(); // ← adentro del click
     });
 }
 
@@ -249,6 +248,17 @@ function activarFavorito(producto) {
 
         actualizarFavoritos();
     });
+}
+
+/* CONTADOR CARRITO */
+function actualizarContador() {
+    const usuario = Auth.obtenerUsuarioLogueado();
+    if (!usuario) return;
+    const CARRITO_KEY = `carrito_${usuario.id_usuario}`;
+    const carrito = JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
+    const total = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+    const counter = document.getElementById("cartCounter");
+    if (counter) counter.textContent = total;
 }
 
 /* RELACIONADOS */
@@ -341,3 +351,15 @@ async function init() {
 }
 
 init();
+actualizarContador();
+actualizarFavoritos();
+
+const usuario = Auth.obtenerUsuarioLogueado();
+const btnFavHeader = document.getElementById("btnFavHeader");
+if (btnFavHeader) {
+    if (usuario) {
+        btnFavHeader.classList.remove("oculto");
+    } else {
+        btnFavHeader.classList.add("oculto");
+    }
+}

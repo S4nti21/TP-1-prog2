@@ -146,17 +146,3 @@ function limpiarErrores() {
     Auth.ocultarMensaje(document.getElementById("mensajeGlobal"));
 
 }
-
-
-function cambiarModo() {
-    Auth.toggleModo();
-    actualizarIconoModo();
-}
-
-
-function actualizarIconoModo() {
-    var icono = document.getElementById("iconoModo");
-    if (!icono) return;
-    var modo = document.documentElement.getAttribute("data-modo");
-    icono.textContent = modo === "oscuro" ? "🌙" : "☀️";
-}
