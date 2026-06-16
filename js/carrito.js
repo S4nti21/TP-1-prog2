@@ -11,6 +11,20 @@ const themeButton =
 const themeIcon =
     document.getElementById("themeIcon");
 
+if(themeButton && themeIcon){
+
+    actualizarIconoTema();
+
+    themeButton.addEventListener("click", () => {
+
+        Auth.toggleModo();
+
+        actualizarIconoTema();
+
+    });
+
+}
+
 // ACTUALIZAR ICONO
 function actualizarIconoTema() {
 
@@ -36,19 +50,6 @@ function actualizarIconoTema() {
     }
 
 }
-
-// EVENTO
-themeButton.addEventListener("click", () => {
-
-    Auth.toggleModo();
-
-    actualizarIconoTema();
-
-});
-
-// ICONO INICIAL
-actualizarIconoTema();
-
 
 /* LOCAL STORAGE */
 
@@ -93,75 +94,55 @@ function renderizarCarrito() {
         // HTML
         const productoHTML = `
 
-            <article class="cart-product">
+<div class="product-card cart-card">
 
-                <!-- IMAGEN -->
-                <div class="cart-product-image">
+    <div class="product-image-wrap">
 
-                    <img
-                        src="${producto.imagen}"
-                        alt="${producto.nombre}">
+        <img
+            src="${producto.imagen}"
+            alt="${producto.nombre}"
+        >
 
-                </div>
+        <button
+            class="btn-remove"
+            data-id="${producto.id}"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
 
-                <!-- INFO -->
-                <div class="cart-product-info">
+    </div>
 
-                    <!-- TOP -->
-                    <div class="cart-product-top">
+    <div class="product-info">
 
-                        <div>
+        <div class="product-info-top">
 
-                            <h2>
-                                ${producto.nombre}
-                            </h2>
+            <p class="product-name">
+                ${producto.nombre}
+            </p>
 
-                            <p class="product-category">
-                                ${producto.categoria}
-                            </p>
+            <p class="product-price">
+                $${producto.precio.toLocaleString("es-AR")}
+            </p>
 
-                        </div>
+            <p class="product-category">
+                ${producto.categoria}
+            </p>
 
-                        <!-- ELIMINAR -->
-                        <button
-                            class="btn-remove"
-                            data-id="${producto.id}">
+            <p class="product-details">
+                Talle: ${producto.talle || "-"}
+            </p>
 
-                            <i class="fa-solid fa-xmark"></i>
+            <p class="product-details">
+                Cantidad: ${producto.cantidad}
+            </p>
 
-                        </button>
+        </div>
 
-                    </div>
+    </div>
 
-                    <!-- DETALLES -->
-                    <div class="product-details">
+</div>
 
-                        <p>
-                            Talle: ${producto.talle}
-                        </p>
-
-                        <p>
-                            Color: ${producto.color}
-                        </p>
-
-                        <p>
-                            Cantidad: ${producto.cantidad}
-                        </p>
-
-                    </div>
-
-                    <!-- PRECIO -->
-                    <div class="product-price">
-
-                        $${producto.precio.toLocaleString("es-AR")}
-
-                    </div>
-
-                </div>
-
-            </article>
-
-        `;
+`;
 
         // INSERTAR
         cartProducts.innerHTML +=
