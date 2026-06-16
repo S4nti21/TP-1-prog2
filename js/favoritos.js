@@ -1,26 +1,26 @@
 let favoritos =
-JSON.parse(
-    localStorage.getItem("favoritos")
-) || [];
+    JSON.parse(
+        localStorage.getItem("favoritos")
+    ) || [];
 
 const container =
-document.getElementById(
-    "favoritesContainer"
-);
+    document.getElementById(
+        "favoritesContainer"
+    );
 
 const subtitle =
-document.getElementById(
-    "favoritesSubtitle"
-);
+    document.getElementById(
+        "favoritesSubtitle"
+    );
 
-function renderizarFavoritos(){
+function renderizarFavoritos() {
 
     container.innerHTML = "";
 
     subtitle.textContent =
-    `${favoritos.length} productos guardados`;
+        `${favoritos.length} productos guardados`;
 
-    if(favoritos.length === 0){
+    if (favoritos.length === 0) {
 
         container.innerHTML = `
         <div class="empty-favorites">
@@ -49,33 +49,54 @@ function renderizarFavoritos(){
 
         container.innerHTML += `
 
-        <div
-        class="product-card favorite-card"
-        data-id="${producto.id}"
-        >
+            <div
+            class="product-card favorite-card"
+            data-id="${producto.id}"
+            >
+
+            <div class="product-image-wrap">
 
         <img
-        src="../assets/${producto.imagen}"
-        alt="${producto.nombre}"
+            src="../assets/${producto.imagen}"
+            alt="${producto.nombre}"
         >
-
-        <h3>${producto.nombre}</h3>
-
-        <p>
-        $${Number(producto.precio)
-        .toLocaleString("es-AR")}
-        </p>
 
         <button
-        class="remove-btn"
-        data-id="${producto.id}"
+            class="bookmark-btn remove-btn"
+            data-id="${producto.id}"
         >
-        Quitar
+            <i class="fa-solid fa-bookmark"></i>
         </button>
+
+    </div>
+
+    <div class="product-info">
+
+        <div class="product-info-top">
+
+            <p class="product-name">
+                ${producto.nombre}
+            </p>
+
+            <p class="product-price">
+                $${Number(producto.precio)
+                .toLocaleString("es-AR")}
+            </p>
 
         </div>
 
-        `;
+    </div>
+
+    <button
+        class="add-cart-btn remove-btn"
+        data-id="${producto.id}"
+    >
+        QUITAR DE FAVORITOS
+    </button>
+
+</div>
+
+`;
     });
 
     activarBotonesEliminar();
@@ -83,49 +104,49 @@ function renderizarFavoritos(){
 
 }
 
-function activarBotonesEliminar(){
+function activarBotonesEliminar() {
 
     const botones =
-    document.querySelectorAll(
-        ".remove-btn"
-    );
+        document.querySelectorAll(
+            ".remove-btn"
+        );
 
     botones.forEach(btn => {
 
         btn.addEventListener(
             "click",
             (e) => {
-        
+
                 e.stopPropagation();
-        
+
                 const id =
-                Number(btn.dataset.id);
-        
+                    Number(btn.dataset.id);
+
                 favoritos =
-                favoritos.filter(
-                    producto =>
-                    producto.id !== id
-                );
-        
+                    favoritos.filter(
+                        producto =>
+                            producto.id !== id
+                    );
+
                 localStorage.setItem(
                     "favoritos",
                     JSON.stringify(favoritos)
                 );
-        
+
                 renderizarFavoritos();
-        
+
             }
         );
 
     });
 
 }
-function activarCardsFavoritas(){
+function activarCardsFavoritas() {
 
     const cards =
-    document.querySelectorAll(
-        ".favorite-card"
-    );
+        document.querySelectorAll(
+            ".favorite-card"
+        );
 
     cards.forEach(card => {
 
@@ -134,7 +155,7 @@ function activarCardsFavoritas(){
             () => {
 
                 window.location.href =
-                `producto.html?id=${card.dataset.id}`;
+                    `producto.html?id=${card.dataset.id}`;
 
             }
         );
