@@ -3,9 +3,6 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    Auth.inicializarModo();
-    actualizarIconoModo();
-
     // Si ya tiene sesión, mandarlo al inicio
     if (Auth.verificarSesion(false)) {
         window.location.href = "./index.html";
@@ -13,8 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     document.getElementById("formRegistro").addEventListener("submit", manejarRegistro);
-    document.getElementById("btnModo").addEventListener("click", cambiarModo);
-
+    
 });
 
 

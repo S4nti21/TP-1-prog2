@@ -1,5 +1,3 @@
-Auth.inicializarModo();
-
 // VERIFICAR SESIÓN
 if (!Auth.obtenerUsuarioLogueado()) {
     window.location.href = "./login.html";

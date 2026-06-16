@@ -490,6 +490,7 @@ body{
   display:flex;
   height:100%;
   transition:transform 1s ease-in-out;
+  will-change: transform;
 }
 
 .hero-slide{
@@ -501,6 +502,7 @@ body{
   width:100%;
   height:100%;
   object-fit:cover;
+  will-change: transform;
 }
 
 .hero-overlay{
@@ -946,6 +948,3 @@ body{
   color: #999;
 }
 
-.oculto {
-  display: none !important;
-}

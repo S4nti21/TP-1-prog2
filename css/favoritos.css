@@ -1,116 +1,223 @@
-.header{
-    background:rgba(255,255,255,.95);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid #e5e5e5;
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    background: rgba(255,255,255,.95) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #e5e5e5;
 }
 
-.logo,
-.icon-btn,
-.cart-icon{
-    color:#111;
+.header .logo,
+.header .icon-btn {
+    color: #111 !important;
 }
 
-/* HERO */
+/* =========================
+   PAGE
+========================= */
 
-.favorites-hero{
-    padding-top:150px;
-    padding-bottom:60px;
-    text-align:center;
+.favorites-page {
+    max-width: 1200px;
+    margin: 120px auto 100px;
+    padding: 0 40px;
 }
 
-.favorites-hero h1{
-    font-size:4rem;
-    letter-spacing:6px;
-    margin-bottom:10px;
+/* =========================
+   HEADER FAVORITOS
+========================= */
+
+.favorites-header {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
 }
 
-.favorites-hero p{
-    color:#666;
+.favorites-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #111;
+    margin-bottom: 6px;
 }
 
-/* CONTENEDOR */
-
-.favorites-page{
-    max-width:1400px;
-    margin:140px auto 80px;
-    padding:0 30px;
+.favorites-header p {
+    font-size: 0.78rem;
+    color: #999;
+    letter-spacing: 1px;
 }
 
-/* GRID IGUAL AL INDEX */
+/* =========================
+   GRID
+========================= */
 
-#favoritesContainer{
-    display:grid;
-    grid-template-columns:
-    repeat(auto-fill,minmax(320px,1fr));
-    gap:25px;
+#favoritesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 260px);
+    justify-content: start;
+    gap: 20px;
 }
 
-/* DESACTIVAR ANIMACIÓN DEL INDEX */
+/* =========================
+   CARD
+========================= */
 
-#favoritesContainer .product-card{
-    opacity:1;
-    transform:none;
+#favoritesContainer .product-card {
+    opacity: 1;
+    transform: none;
+    position: relative;
+    background: white;
+    border: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
 }
 
-/* BOTÓN QUITAR */
-
-.remove-btn{
-    width:100%;
-    padding:11px;
-    border:1px solid #111;
-    background:white;
-    color:#111;
-    font-size:.72rem;
-    letter-spacing:2px;
-    cursor:pointer;
-    font-family:'Montserrat',sans-serif;
-    transition:.25s;
+#favoritesContainer .product-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
-.remove-btn:hover{
-    background:#111;
-    color:white;
+/* =========================
+   IMAGEN
+========================= */
+
+#favoritesContainer .product-image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #efefef;
 }
 
-/* FAVORITOS VACÍOS */
-
-.empty-favorites{
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:100px 20px;
+#favoritesContainer .product-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
 }
 
-.empty-favorites i{
-    font-size:4rem;
-    color:#999;
-    margin-bottom:25px;
+#favoritesContainer .product-card:hover .product-image-wrap img {
+    transform: scale(1.03);
 }
 
-.empty-favorites h2{
-    font-size:2rem;
-    margin-bottom:15px;
-    color:#111;
+/* =========================
+   BOTÓN X (quitar)
+========================= */
+
+.remove-icon-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background 0.2s, color 0.2s;
 }
 
-.empty-favorites p{
-    color:#666;
-    margin-bottom:30px;
+.remove-icon-btn:hover {
+    background: #111;
+    color: white;
 }
 
-.shop-btn{
-    padding:14px 28px;
-    background:#111;
-    color:white;
-    text-decoration:none;
-    letter-spacing:2px;
-    font-size:.8rem;
-    transition:.25s;
+/* =========================
+   INFO
+========================= */
+
+#favoritesContainer .product-info {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.shop-btn:hover{
-    opacity:.8;
+#favoritesContainer .product-name {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #111;
+    letter-spacing: 0.5px;
+}
+
+#favoritesContainer .product-price {
+    font-size: 0.78rem;
+    color: #555;
+}
+
+/* =========================
+   VACÍO
+========================= */
+
+.empty-favorites {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.empty-favorites i {
+    font-size: 3rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.empty-favorites h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    color: #111;
+}
+
+.empty-favorites p {
+    color: #999;
+    font-size: 0.85rem;
+    margin-bottom: 30px;
+}
+
+.shop-btn {
+    padding: 13px 28px;
+    background: #111;
+    color: white;
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-size: 0.72rem;
+    transition: opacity 0.2s;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.shop-btn:hover {
+    opacity: 0.75;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+    .favorites-page {
+        padding: 0 20px;
+        margin-top: 100px;
+    }
+
+    #favoritesContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    #favoritesContainer {
+        grid-template-columns: 1fr;
+    }
 }
