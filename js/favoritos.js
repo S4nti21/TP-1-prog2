@@ -55,7 +55,7 @@ function renderizarFavoritos(){
         >
 
         <img
-        src="../assets/${producto.imagen}"
+        src="${producto.imagen.startsWith('../') ? producto.imagen : '../assets/' + producto.imagen}"
         alt="${producto.nombre}"
         >
 

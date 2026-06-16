@@ -62,11 +62,9 @@ function renderizarProducto(producto) {
             : `<p class="stock-msg">Stock disponible: ${producto.stock} unidades</p>`
         }
 
-                <p class="product-description">
-                    Diseño premium pensado para uso diario.
-                    Materiales de alta calidad y silueta oversized
-                    inspirada en el streetwear contemporáneo.
-                </p>
+<p class="product-description">
+    ${producto.descripcion || "Diseño premium pensado para uso diario. Materiales de alta calidad y silueta oversized inspirada en el streetwear contemporáneo."}
+</p>
 
                 <!-- CUOTAS -->
                 <div class="cuotas-selector">

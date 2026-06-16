@@ -1,5 +1,10 @@
 Auth.inicializarModo();
 
+// VERIFICAR SESIÓN
+if (!Auth.obtenerUsuarioLogueado()) {
+    window.location.href = "./login.html";
+}
+
 const themeButton =
     document.getElementById("themeButton");
 
@@ -7,13 +12,13 @@ const themeIcon =
     document.getElementById("themeIcon");
 
 // ACTUALIZAR ICONO
-function actualizarIconoTema(){
+function actualizarIconoTema() {
 
     const modo =
         document.documentElement.getAttribute("data-modo");
 
     // MODO CLARO
-    if(modo === "claro"){
+    if (modo === "claro") {
 
         themeIcon.classList.remove("fa-moon");
 
@@ -22,7 +27,7 @@ function actualizarIconoTema(){
     }
 
     // MODO OSCURO
-    else{
+    else {
 
         themeIcon.classList.remove("fa-sun");
 
@@ -48,9 +53,9 @@ actualizarIconoTema();
 /* LOCAL STORAGE */
 
 let carrito =
-JSON.parse(
-    localStorage.getItem("carrito")
-) || [];
+    JSON.parse(
+        localStorage.getItem("carrito")
+    ) || [];
 
 const cartProducts =
     document.getElementById("cartProducts");
@@ -71,7 +76,7 @@ const checkoutButton =
     document.getElementById("checkoutButton");
 
 
-function renderizarCarrito(){
+function renderizarCarrito() {
 
     // LIMPIAR HTML
     cartProducts.innerHTML = "";
@@ -185,12 +190,12 @@ function renderizarCarrito(){
 }
 
 
-function eliminarProducto(idProducto){
+function eliminarProducto(idProducto) {
 
     carrito =
         carrito.filter((producto) => {
 
-            return producto.id !== idProducto;
+            return String(producto.id) !== String(idProducto);
 
         });
 
@@ -203,7 +208,7 @@ function eliminarProducto(idProducto){
 
     /* SI ESTÁ VACÍO */
 
-    if(carrito.length === 0){
+    if (carrito.length === 0) {
 
         localStorage.removeItem(
             "carrito"
@@ -216,7 +221,7 @@ function eliminarProducto(idProducto){
 }
 
 
-function agregarEventosEliminar(){
+function agregarEventosEliminar() {
 
     const botonesEliminar =
         document.querySelectorAll(".btn-remove");
@@ -225,9 +230,7 @@ function agregarEventosEliminar(){
 
         boton.addEventListener("click", () => {
 
-            const id =
-                Number(boton.dataset.id);
-
+            const id = boton.dataset.id;
             eliminarProducto(id);
 
         });
@@ -240,7 +243,7 @@ function agregarEventosEliminar(){
 checkoutButton.addEventListener("click", () => {
 
     // VALIDAR
-    if(carrito.length === 0){
+    if (carrito.length === 0) {
 
         alert("El carrito está vacío");
 
