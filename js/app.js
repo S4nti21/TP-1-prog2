@@ -1,25 +1,3 @@
-// MODO OSCURO
-Auth.inicializarModo();
-
-const themeButton = document.getElementById("themeButton");
-const themeIcon = document.getElementById("themeIcon");
-
-function actualizarIconoTema() {
-  const modo = document.documentElement.getAttribute("data-modo");
-  if (modo === "claro") {
-    themeIcon.classList.replace("fa-moon", "fa-sun");
-  } else {
-    themeIcon.classList.replace("fa-sun", "fa-moon");
-  }
-}
-
-themeButton.addEventListener("click", () => {
-  Auth.toggleModo();
-  actualizarIconoTema();
-});
-
-actualizarIconoTema();
-
 const usuario = Auth.obtenerUsuarioLogueado();
 
 const FAVORITOS_KEY = usuario
@@ -341,6 +319,10 @@ async function obtenerProductos() {
 
 /* RENDER */
 
+/* ============================================================
+   REEMPLAZAR renderProducts() en app.js por esta versión
+   ============================================================ */
+
 function renderProducts(products) {
 
   container.innerHTML = "";
@@ -353,6 +335,28 @@ function renderProducts(products) {
           producto.nombre === product.nombre
       );
 
+    const stock = product.stock !== undefined ? Number(product.stock) : 10;
+    const sinStock = stock === 0;
+
+    // Texto y clase para stock
+    let stockTexto = "";
+    let stockClase = "product-stock stock-ok";
+    if (sinStock) {
+      stockTexto = "Sin unidades disponibles";
+      stockClase = "product-stock stock-bajo";
+    } else if (stock <= 3) {
+      stockTexto = `¡Últimas ${stock} unidades!`;
+      stockClase = "product-stock stock-bajo";
+    } else {
+      stockTexto = `Stock: ${stock} unidades`;
+      stockClase = "product-stock stock-ok";
+    }
+
+    // Overlay si no hay stock
+    const overlayHTML = sinStock
+      ? `<div class="out-of-stock-overlay"><span class="out-of-stock-label">SIN STOCK</span></div>`
+      : "";
+
     container.innerHTML += `
       <div 
         class="product-card"
@@ -362,6 +366,8 @@ function renderProducts(products) {
         data-color="${product.color || ''}">
       
         <div class="product-image-wrap">
+
+          ${overlayHTML}
   
           <span class="product-badge" style="display:none">
             BACK IN STOCK
@@ -379,12 +385,10 @@ function renderProducts(products) {
             data-price="${product.precio}"
             data-image="${product.imagen}"
           >
-  
             <i class="${esFavorito
-        ? "fa-solid fa-bookmark"
-        : "fa-regular fa-bookmark"
-      }"></i>
-  
+              ? "fa-solid fa-bookmark"
+              : "fa-regular fa-bookmark"
+            }"></i>
           </button>
   
         </div>
@@ -393,13 +397,13 @@ function renderProducts(products) {
   
           <div class="product-info-top">
   
-            <p class="product-name">
-              ${product.nombre}
-            </p>
+            <p class="product-name">${product.nombre}</p>
   
             <p class="product-price">
               $${Number(product.precio).toLocaleString("es-AR")}
             </p>
+
+            <p class="${stockClase}">${stockTexto}</p>
   
           </div>
   
@@ -410,9 +414,9 @@ function renderProducts(products) {
           data-name="${product.nombre}"
           data-price="${product.precio}"
           data-image="${product.imagen}"
-          ${product.stock === 0 ? "disabled style=\"opacity:.4;cursor:not-allowed\"" : ""}
+          ${sinStock ? "disabled" : ""}
         >
-          ${product.stock === 0 ? "SIN STOCK" : "AGREGAR AL CARRITO"}
+          ${sinStock ? "SIN STOCK" : "AGREGAR AL CARRITO"}
         </button>
   
       </div>
@@ -421,11 +425,8 @@ function renderProducts(products) {
   });
 
   activarAnimaciones();
-
   activarBotonesCarrito();
-
   activarBotonesFavoritos();
-
   activarClickProducto();
 
 }
@@ -655,7 +656,6 @@ function agregarAlCarrito(e) {
 
   e.stopPropagation();
 
-  // VERIFICAR LOGIN
   const usuario = Auth.obtenerUsuarioLogueado();
 
   if (!usuario) {
@@ -668,39 +668,38 @@ function agregarAlCarrito(e) {
 
   const CARRITO_KEY = `carrito_${usuario.id_usuario}`;
 
-  carrito =
-    JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
+  carrito = JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
 
-  const nombre =
-    e.target.dataset.name;
+  const nombre = e.target.dataset.name;
+  const precio = e.target.dataset.price;
+  const imagen = e.target.dataset.image;
+  const talle  = "M"; // cuando integres talles en el index, reemplazá esto
 
-  const precio =
-    e.target.dataset.price;
+  const productoExistente = carrito.find(
+    p => p.nombre === nombre && p.talle === talle
+  );
 
-  const imagen =
-    e.target.dataset.image;
+  if (productoExistente) {
 
-  const producto = {
+    productoExistente.cantidad += 1;
+    mostrarToast(`${nombre} — cantidad actualizada`);
 
-    id: Date.now(),
+  } else {
 
-    nombre,
+    carrito.push({
+      id: Date.now(),
+      nombre,
+      precio: Number(precio),
+      categoria: "Streetwear",
+      talle,
+      color: "Negro",
+      cantidad: 1,
+      imagen: `../assets/${imagen}`
+    });
 
-    precio: Number(precio),
+    mostrarToast(`${nombre} agregado al carrito`);
 
-    categoria: "Streetwear",
-
-    talle: "M",
-
-    color: "Negro",
-
-    cantidad: 1,
-
-    imagen: `../assets/${imagen}`
-
-  };
-
-  carrito.push(producto);
+  }
 
   localStorage.setItem(CARRITO_KEY, JSON.stringify(carrito));
 
@@ -718,15 +717,13 @@ function actualizarContador() {
     ? `carrito_${usuario.id_usuario}`
     : "carrito";
 
-  const carrito =
-    JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
+  const carrito = JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
 
-  const counter =
-    document.getElementById("cartCounter");
+  const total = carrito.reduce((acc, p) => acc + p.cantidad, 0);
 
-  if (counter) {
-    counter.textContent = carrito.length;
-  }
+  const counter = document.getElementById("cartCounter");
+
+  if (counter) counter.textContent = total;
 
 }
 

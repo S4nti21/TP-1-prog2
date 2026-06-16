@@ -1,3 +1,6 @@
+[data-rol="logueado"] {
+    display: none;
+}
 /* =========================
    PRODUCT PAGE
 ========================= */
@@ -401,4 +404,3 @@
     transform:none;
 
 }
-

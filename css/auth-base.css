@@ -58,7 +58,7 @@ body {
   justify-content: center;
   padding: 24px;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 /* --- Capa 1: imagen de fondo con blur --- */

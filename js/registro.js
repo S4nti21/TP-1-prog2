@@ -3,9 +3,6 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    Auth.inicializarModo();
-    actualizarIconoModo();
-
     // Si ya tiene sesión, mandarlo al inicio
     if (Auth.verificarSesion(false)) {
         window.location.href = "./index.html";
@@ -13,8 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     document.getElementById("formRegistro").addEventListener("submit", manejarRegistro);
-    document.getElementById("btnModo").addEventListener("click", cambiarModo);
-
+    
 });
 
 
@@ -145,18 +141,4 @@ function limpiarErrores() {
 
     Auth.ocultarMensaje(document.getElementById("mensajeGlobal"));
 
-}
-
-
-function cambiarModo() {
-    Auth.toggleModo();
-    actualizarIconoModo();
-}
-
-
-function actualizarIconoModo() {
-    var icono = document.getElementById("iconoModo");
-    if (!icono) return;
-    var modo = document.documentElement.getAttribute("data-modo");
-    icono.textContent = modo === "oscuro" ? "🌙" : "☀️";
 }

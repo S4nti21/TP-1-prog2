@@ -47,22 +47,14 @@
 
         <div class="header-right">
 
-            <a
-            href="./favoritos.html"
-            class="icon-btn"
-            >
-            <i class="fa-regular fa-bookmark"></i>
-
-            <span id="favoritesCounter">
-             0
-            </span>
+            <a href="./favoritos.html" class="icon-btn" data-rol="logueado">
+                <i class="fa-regular fa-bookmark"></i>
+                <span id="favoritesCounter">0</span>
             </a>
 
-            <a
-                href="./carrito.html"
-                class="icon-btn"
-            >
+            <a href="./carrito.html" class="cart-icon">
                 <i class="fa-solid fa-bag-shopping"></i>
+                <span id="cartCounter">0</span>
             </a>
 
         </div>
@@ -84,7 +76,10 @@
     
     </section>
 
+    <script src="../js/auth.js"></script>
     <script src="../js/producto.js"></script>
+
+    <div id="toast" class="toast"></div>
 
 </body>
 

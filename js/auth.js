@@ -173,23 +173,6 @@ async function actualizarPerfil(idUsuario, datosActualizados) {
   }
   return datos;
 }
-
-// ============================================================
-// MODO OSCURO / CLARO
-// ============================================================
-
-function inicializarModo() {
-  const modoGuardado = localStorage.getItem("lanaLino_modo") || "claro";
-  document.documentElement.setAttribute("data-modo", modoGuardado);
-}
-
-function toggleModo() {
-  const modoActual = document.documentElement.getAttribute("data-modo") || "claro";
-  const nuevoModo = modoActual === "claro" ? "oscuro" : "claro";
-  document.documentElement.setAttribute("data-modo", nuevoModo);
-  localStorage.setItem("lanaLino_modo", nuevoModo);
-}
-
 // ============================================================
 // UTILIDADES DE UI
 // ============================================================
@@ -230,8 +213,6 @@ window.Auth = {
   registrarUsuario,
   obtenerPerfil,
   actualizarPerfil,
-  inicializarModo,
-  toggleModo,
   mostrarMensaje,
   ocultarMensaje,
   setBotonCargando,
