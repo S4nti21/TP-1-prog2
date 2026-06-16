@@ -51,8 +51,11 @@ actualizarIconoTema();
 
 /* LEER CARRITO REAL DEL LOCALSTORAGE */
 
+const usuario = Auth.obtenerUsuarioLogueado();
+const CARRITO_KEY = `carrito_${usuario.id_usuario}`;
+
 const productos =
-    JSON.parse(localStorage.getItem("carrito")) || [];
+    JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
 
 const summaryProducts =
     document.getElementById("summaryProducts");
@@ -245,7 +248,7 @@ paymentForm.addEventListener("submit", (event) => {
     }
 
     // EXITO — vaciar el carrito
-    localStorage.removeItem("carrito");
+    localStorage.removeItem(CARRITO_KEY);
 
     paymentMessage.textContent =
         "¡Pago aprobado con éxito! Gracias por tu compra.";

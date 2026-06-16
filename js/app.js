@@ -20,9 +20,20 @@ themeButton.addEventListener("click", () => {
 
 actualizarIconoTema();
 
+const usuario = Auth.obtenerUsuarioLogueado();
+
+const FAVORITOS_KEY = usuario
+  ? `favoritos_${usuario.id_usuario}`
+  : "favoritos";
+
+const CARRITO_KEY = usuario
+  ? `carrito_${usuario.id_usuario}`
+  : "carrito";
+
+// 👇 Y CAMBIÁ ESTO
 let favoritos =
   JSON.parse(
-    localStorage.getItem("favoritos")
+    localStorage.getItem(FAVORITOS_KEY)
   ) || [];
 
 const dropdown =
@@ -101,7 +112,7 @@ categoryLinks.forEach(link => {
 
 let carrito =
   JSON.parse(
-    localStorage.getItem("carrito")
+    localStorage.getItem(CARRITO_KEY)
   ) || [];
 
 let todosLosProductos = [];
@@ -488,11 +499,19 @@ function agregarAFavoritos(e) {
 
   // VERIFICAR LOGIN
   const usuario = Auth.obtenerUsuarioLogueado();
+
   if (!usuario) {
     mostrarToast("Debes iniciar sesión para agregar a favoritos");
-    setTimeout(() => { window.location.href = "./login.html"; }, 1500);
+    setTimeout(() => {
+      window.location.href = "./login.html";
+    }, 1500);
     return;
   }
+
+  const FAVORITOS_KEY = `favoritos_${usuario.id_usuario}`;
+
+  favoritos =
+    JSON.parse(localStorage.getItem(FAVORITOS_KEY)) || [];
 
   const boton =
     e.currentTarget;
@@ -505,9 +524,6 @@ function agregarAFavoritos(e) {
 
   const imagen =
     boton.dataset.image;
-
-  const url =
-    boton.dataset.url;
 
   const existe =
     favoritos.find(
@@ -549,15 +565,7 @@ function agregarAFavoritos(e) {
 
   }
 
-  localStorage.setItem(
-
-    "favoritos",
-
-    JSON.stringify(
-      favoritos
-    )
-
-  );
+  localStorage.setItem(FAVORITOS_KEY, JSON.stringify(favoritos));
 
   actualizarFavoritos();
 
@@ -565,21 +573,20 @@ function agregarAFavoritos(e) {
 
 function actualizarFavoritos() {
 
+  const usuario = Auth.obtenerUsuarioLogueado();
+
+  const FAVORITOS_KEY = usuario
+    ? `favoritos_${usuario.id_usuario}`
+    : "favoritos";
+
   const favoritos =
-    JSON.parse(
-      localStorage.getItem("favoritos")
-    ) || [];
+    JSON.parse(localStorage.getItem(FAVORITOS_KEY)) || [];
 
   const contador =
-    document.getElementById(
-      "favoritesCounter"
-    );
+    document.getElementById("favoritesCounter");
 
   if (contador) {
-
-    contador.textContent =
-      favoritos.length;
-
+    contador.textContent = favoritos.length;
   }
 
 }
@@ -650,11 +657,19 @@ function agregarAlCarrito(e) {
 
   // VERIFICAR LOGIN
   const usuario = Auth.obtenerUsuarioLogueado();
+
   if (!usuario) {
-    mostrarToast("Debes iniciar sesion para agregar al carrito");
-    setTimeout(() => { window.location.href = "./login.html"; }, 1500);
+    mostrarToast("Debes iniciar sesión para agregar al carrito");
+    setTimeout(() => {
+      window.location.href = "./login.html";
+    }, 1500);
     return;
   }
+
+  const CARRITO_KEY = `carrito_${usuario.id_usuario}`;
+
+  carrito =
+    JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
 
   const nombre =
     e.target.dataset.name;
@@ -687,10 +702,7 @@ function agregarAlCarrito(e) {
 
   carrito.push(producto);
 
-  localStorage.setItem(
-    "carrito",
-    JSON.stringify(carrito)
-  );
+  localStorage.setItem(CARRITO_KEY, JSON.stringify(carrito));
 
   actualizarContador();
 
@@ -700,13 +712,21 @@ function agregarAlCarrito(e) {
 
 function actualizarContador() {
 
-  const counter =
-    document.getElementById(
-      "cartCounter"
-    );
+  const usuario = Auth.obtenerUsuarioLogueado();
 
-  counter.textContent =
-    carrito.length;
+  const CARRITO_KEY = usuario
+    ? `carrito_${usuario.id_usuario}`
+    : "carrito";
+
+  const carrito =
+    JSON.parse(localStorage.getItem(CARRITO_KEY)) || [];
+
+  const counter =
+    document.getElementById("cartCounter");
+
+  if (counter) {
+    counter.textContent = carrito.length;
+  }
 
 }
 

@@ -1,6 +1,9 @@
+const usuario = Auth.obtenerUsuarioLogueado();
+const FAVORITOS_KEY = `favoritos_${usuario.id_usuario}`;
+
 let favoritos =
     JSON.parse(
-        localStorage.getItem("favoritos")
+        localStorage.getItem(FAVORITOS_KEY)
     ) || [];
 
 const container =
@@ -134,7 +137,7 @@ function activarBotonesEliminar() {
                     );
 
                 localStorage.setItem(
-                    "favoritos",
+                    FAVORITOS_KEY,
                     JSON.stringify(favoritos)
                 );
 
