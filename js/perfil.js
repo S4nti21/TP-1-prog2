@@ -137,10 +137,13 @@ async function guardarCambios() {
         var id = usuarioActual.id_usuario || usuarioActual.id;
 
         var datosActualizados = {
-            nombre: nombre,
-            apellido: apellido,
-            telefono: telefono,
-            direccion: direccion
+            nombre:    nombre,
+            apellido:  apellido,
+            telefono:  telefono,
+            direccion: direccion,
+            email:     usuarioActual.email    || "",
+            rol:       usuarioActual.rol      || "usuario",
+            password:  usuarioActual.password || ""
         };
 
         var respuesta = await Auth.actualizarPerfil(id, datosActualizados);
