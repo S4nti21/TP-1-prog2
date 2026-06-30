@@ -5,17 +5,16 @@
 
 const BASE_URL = "http://localhost:4000/api";
 
-// Rutas reales del backend
 const API_ENDPOINTS = {
-  login: `${BASE_URL}/login`,
+  login:    `${BASE_URL}/login`,
   registro: `${BASE_URL}/registrarUsuario`,
-  perfil: `${BASE_URL}/obtenerDatosUsuario`,  
-  modificar: `${BASE_URL}/modificarUsuario`,
+  perfil:   `${BASE_URL}/obtenerDatosUsuario`,
+  modificar:`${BASE_URL}/modificarUsuario`,
 };
 
 const STORAGE_KEY = "lanaLino_usuario";
 
-// SESIÓN
+// ─── SESIÓN ───────────────────────────────────────────────
 
 function guardarSesion(usuario) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(usuario));
@@ -40,17 +39,13 @@ function cerrarSesion() {
   window.location.href = "./login.html";
 }
 
-// ROLES
+// ─── ROLES ────────────────────────────────────────────────
 
 function esAdmin() {
   const usuario = obtenerUsuarioLogueado();
   return usuario?.rol?.toLowerCase() === "admin";
 }
 
-/**
- * Busca elementos con data-rol="admin", data-rol="logueado", data-rol="no-logueado"
- * y los muestra u oculta según el estado de sesión y rol.
- */
 function aplicarPermisosPorRol() {
   const usuario = obtenerUsuarioLogueado();
 
@@ -67,9 +62,7 @@ function aplicarPermisosPorRol() {
   });
 }
 
-// FETCH CON TOKEN
-// Usar esta función para todos los endpoints protegidos.
-// Agrega automáticamente el header Authorization con el JWT.
+// ─── FETCH CON TOKEN ──────────────────────────────────────
 
 async function fetchConToken(url, opciones = {}) {
   const usuario = obtenerUsuarioLogueado();
@@ -83,10 +76,10 @@ async function fetchConToken(url, opciones = {}) {
   return fetch(url, { ...opciones, headers });
 }
 
-// LLAMADAS A LA API
+// ─── LLAMADAS A LA API ────────────────────────────────────
 
 async function loginUsuario(email, password) {
-
+  // IMPORTANTE: el backend espera el campo "usuario", no "email"
   const respuesta = await fetch(API_ENDPOINTS.login, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -102,10 +95,10 @@ async function loginUsuario(email, password) {
   const usuario = datos.payload[0];
   return {
     id_usuario: usuario.id_usuario,
-    nombre: usuario.nombre,
-    apellido: usuario.apellido,
-    rol: usuario.rol,
-    token: datos.jwt,
+    nombre:     usuario.nombre,
+    apellido:   usuario.apellido,
+    rol:        usuario.rol,
+    token:      datos.jwt,
   };
 }
 
@@ -130,7 +123,6 @@ async function registrarUsuario(datosUsuario) {
 
 async function obtenerPerfil(idUsuario) {
   const respuesta = await fetchConToken(`${API_ENDPOINTS.perfil}/${idUsuario}`);
-
   const datos = await respuesta.json();
   if (datos.codigo === -1) {
     throw new Error(datos.mensaje || "No se pudo obtener el perfil.");
@@ -151,7 +143,7 @@ async function actualizarPerfil(idUsuario, datosActualizados) {
   return datos;
 }
 
-// UTILIDADES DE UI
+// ─── UTILIDADES DE UI ─────────────────────────────────────
 
 function mostrarMensaje(elemento, texto, tipo = "error") {
   elemento.textContent = texto;
@@ -172,7 +164,22 @@ function setBotonCargando(boton, cargando, textoOriginal = "Enviar") {
   boton.textContent = cargando ? "Cargando..." : textoOriginal;
 }
 
-// EXPORTAR AL ÁMBITO GLOBAL
+// ─── MODO OSCURO / CLARO ──────────────────────────────────
+
+function inicializarModo() {
+  const modoGuardado = localStorage.getItem("lanaLino_modo") || "claro";
+  document.documentElement.setAttribute("data-modo", modoGuardado);
+}
+
+function toggleModo() {
+  const modoActual = document.documentElement.getAttribute("data-modo");
+  const nuevoModo = modoActual === "oscuro" ? "claro" : "oscuro";
+  document.documentElement.setAttribute("data-modo", nuevoModo);
+  localStorage.setItem("lanaLino_modo", nuevoModo);
+}
+
+// ─── EXPORTAR AL ÁMBITO GLOBAL ────────────────────────────
+
 window.Auth = {
   BASE_URL,
   API_ENDPOINTS,
@@ -190,4 +197,6 @@ window.Auth = {
   mostrarMensaje,
   ocultarMensaje,
   setBotonCargando,
+  inicializarModo,
+  toggleModo,
 };

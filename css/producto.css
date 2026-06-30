@@ -365,7 +365,36 @@
 /*RELACIONADOS*/
 .related-products{
 
-    margin-top:100px;
+    max-width:1400px;
+    margin:100px auto 100px;
+    padding:0 50px;
+
+}
+
+.related-products h2{
+
+    font-family:'Montserrat',sans-serif;
+    font-size:1.4rem;
+    font-weight:700;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:#111;
+    margin-bottom:35px;
+    padding-bottom:18px;
+    border-bottom:1px solid #e5e5e5;
+    position:relative;
+
+}
+
+.related-products h2::after{
+
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-1px;
+    width:60px;
+    height:2px;
+    background:#111;
 
 }
 

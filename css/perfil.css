@@ -142,6 +142,33 @@ body::after {
   border-radius: 0 0 2px 2px;
 }
 
+.perfil-header__volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  font-family: var(--f-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-suave);
+  text-decoration: none;
+  transition: color var(--trans);
+}
+.perfil-header__volver:hover { color: var(--c-acento); }
+.perfil-header__volver-flecha {
+  display: inline-block;
+  font-size: 14px;
+  transition: transform var(--trans);
+}
+.perfil-header__volver:hover .perfil-header__volver-flecha { transform: translateX(-3px); }
+
+.btn-modo__texto { display: none; }
+@media (min-width: 521px) {
+  .btn-modo__texto { display: inline; }
+}
+
 .perfil-header__marca {
   font-family: var(--f-display);
   font-size: 0.9rem;

@@ -23,13 +23,20 @@
     Cargando perfil...
   </div>
 
-  <!-- Contenido del perfil -->
-  <main class="perfil-pagina" id="paginaPerfil" style="display: none;">
+    <button class="btn-modo" id="btnModo" title="Cambiar modo">
+      <span class="btn-modo__icono" id="iconoModo">☀️</span>
+      <span class="btn-modo__texto">Modo</span>
+    </button>
 
-    <header class="perfil-header">
-      <p class="perfil-header__marca">Lana &amp; Lino</p>
-      <h1 class="perfil-header__titulo">Mi Perfil</h1>
-    </header>
+    <main class="perfil-pagina" id="paginaPerfil" style="display: none;">
+
+      <header class="perfil-header">
+        <a href="./index.html" class="perfil-header__volver">
+          <span class="perfil-header__volver-flecha">←</span> Volver a la tienda
+        </a>
+        <p class="perfil-header__marca">Lana &amp; Lino</p>
+        <h1 class="perfil-header__titulo">Mi Perfil</h1>
+      </header>
 
     <!-- Datos personales -->
     <section class="perfil-seccion" id="seccionDatos">
