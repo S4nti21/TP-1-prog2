@@ -109,20 +109,8 @@ async function obtenerProductos() {
   }
 }
 
-// Fallback mientras la BD no tenga datos cargados
 function productosLocalesFallback() {
-  return [
-    { id: 1,  nombre: "MEDIC CREME ZIP HOODIE", precio: 148500, categoria: "hoodies",    imagen: "medic.png",          genero: "unisex", color: "Crema", stock: 10 },
-    { id: 2,  nombre: "WARFARE HOODIE",         precio: 129900, categoria: "hoodies",    imagen: "warfare.png",        genero: "hombre", color: "Negro", stock: 5  },
-    { id: 3,  nombre: "BLACK DENIM",            precio: 189000, categoria: "pantalones", imagen: "black denim.png",    genero: "hombre", color: "Negro", stock: 8  },
-    { id: 4,  nombre: "STREET JACKET",          precio: 220000, categoria: "camperas",   imagen: "street jacket.png",  genero: "unisex", color: "Gris",  stock: 3  },
-    { id: 5,  nombre: "ESSENTIAL TEE",          precio: 78000,  categoria: "remeras",    imagen: "essentialtee.png",   genero: "unisex", color: "Blanco",stock: 15 },
-    { id: 6,  nombre: "OVERSIZED TEE",          precio: 82000,  categoria: "remeras",    imagen: "oversizedtee.png",   genero: "unisex", color: "Negro", stock: 12 },
-    { id: 7,  nombre: "UTILITY PANTS",          precio: 175000, categoria: "pantalones", imagen: "utilitypants.png",   genero: "hombre", color: "Verde", stock: 6  },
-    { id: 8,  nombre: "TACTICAL HOODIE",        precio: 158000, categoria: "hoodies",    imagen: "tacticalhoodie.png", genero: "hombre", color: "Gris",  stock: 4  },
-    { id: 9,  nombre: "CARGO PANTS",            precio: 195000, categoria: "pantalones", imagen: "cargopants.png",     genero: "unisex", color: "Beige", stock: 7  },
-    { id: 10, nombre: "MINIMAL JACKET",         precio: 248000, categoria: "camperas",   imagen: "minimaljacket.png",  genero: "unisex", color: "Negro", stock: 2  },
-  ];
+  return [];
 }
 
 // ─── SINCRONIZAR FAVORITOS CON LA API ─────────────────────
@@ -155,6 +143,11 @@ async function sincronizarFavoritos() {
 
 function renderProducts(products) {
   container.innerHTML = "";
+
+  if (products.length === 0) {
+    container.innerHTML = `<div class="no-results" style="grid-column:1/-1; text-align:center; padding:60px 0; color:#999; letter-spacing:2px; text-transform:uppercase; font-size:.85rem;">No hay productos disponibles</div>`;
+    return;
+  }
 
   products.forEach(product => {
     const esFavorito = favoritos.some(f =>
