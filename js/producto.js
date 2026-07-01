@@ -1,18 +1,7 @@
 /* ─── FALLBACK LOCAL ──────────────────────────────────────
    Solo se usa si el backend no responde o la BD está vacía */
 
-const productosLocales = [
-  { id: 1,  nombre: "MEDIC CREME ZIP HOODIE", precio: 148500, categoria: "hoodies",    imagen: "medic.png",          color: "Crema", talles: ["S","M","L","XL"], stock: 10 },
-  { id: 2,  nombre: "WARFARE HOODIE",         precio: 129900, categoria: "hoodies",    imagen: "warfare.png",        color: "Negro", talles: ["S","M","L"],      stock: 5  },
-  { id: 3,  nombre: "BLACK DENIM",            precio: 189000, categoria: "pantalones", imagen: "black denim.png",    color: "Negro", talles: ["28","30","32"],   stock: 8  },
-  { id: 4,  nombre: "STREET JACKET",          precio: 220000, categoria: "camperas",   imagen: "street jacket.png",  color: "Gris",  talles: ["M","L","XL"],     stock: 3  },
-  { id: 5,  nombre: "ESSENTIAL TEE",          precio: 78000,  categoria: "remeras",    imagen: "essentialtee.png",   color: "Blanco",talles: ["S","M","L","XL"], stock: 15 },
-  { id: 6,  nombre: "OVERSIZED TEE",          precio: 82000,  categoria: "remeras",    imagen: "oversizedtee.png",   color: "Negro", talles: ["M","L","XL"],     stock: 12 },
-  { id: 7,  nombre: "UTILITY PANTS",          precio: 175000, categoria: "pantalones", imagen: "utilitypants.png",   color: "Verde", talles: ["28","30","32"],   stock: 6  },
-  { id: 8,  nombre: "TACTICAL HOODIE",        precio: 158000, categoria: "hoodies",    imagen: "tacticalhoodie.png", color: "Gris",  talles: ["S","M","L"],      stock: 4  },
-  { id: 9,  nombre: "CARGO PANTS",            precio: 195000, categoria: "pantalones", imagen: "cargopants.png",     color: "Beige", talles: ["28","30","32"],   stock: 7  },
-  { id: 10, nombre: "MINIMAL JACKET",         precio: 248000, categoria: "camperas",   imagen: "minimaljacket.png",  color: "Negro", talles: ["M","L","XL"],     stock: 2  },
-];
+const productosLocales = [];
 
 /* ─── CONSTANTES ─────────────────────────────────────────── */
 
